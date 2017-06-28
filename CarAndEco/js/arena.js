@@ -63,27 +63,30 @@ Arena.prototype = {
             
         }
 
-        this.car = gameplayBg.addChild(this.game.add.sprite(10, gameplayBg.height - 70, 'carA'));
+        this.car = gameplayBg.addChild(this.game.add.sprite(15, gameplayBg.height - 80, 'carA'));
         this.game.physics.arcade.enable(this.car);
-
-        // tweenCar = this.game.add.tween(this.car).to( { x: 50, y: gameplayBg.height - 70 - 40 }, 2000, Phaser.Easing.Bounce.Out);
 
         cursors = this.game.input.keyboard.createCursorKeys();
 
     },
 
     update: function() {
-        this.game.physics.arcade.collide(this.car, this.roads);
+        // this.game.physics.arcade.collide(this.car, this.roads);
 
         if(this.game.input.activePointer.leftButton.isDown) {
-            this.game.add.tween(this.car).to( { x: 55 }, 3000, "Sine.easeInOut", true);
-            this.game.add.tween(this.car).to( { y: gameplayBg.height - 150 }, 1400, "Sine.easeInOut", true);
+            var carY = this.car.y
 
-            this.game.time.events.add(Phaser.Timer.SECOND * 2, function() {
-                this.game.add.tween(this.car).to( { y: gameplayBg.height - 95 }, 1400, "Sine.easeInOut", true);
+            this.game.add.tween(this.car).to( { x: this.car.x + 45 }, 2000, "Sine.easeInOut", true);
+            this.game.add.tween(this.car).to( { y: carY - 80 }, 900, "Sine.easeInOut", true);
+
+            this.game.time.events.add(Phaser.Timer.SECOND * 1, function() {
+                this.game.add.tween(this.car).to( { y: carY - 25 }, 900, "Sine.easeInOut", true);
             }, this).autoDestroy = true;
-            // tweenCar.start();
         }
+
+        this.game.physics.arcade.overlap(this.car, this.roads, function(car, road) {
+            console.log(road);
+        }, null, this);
     },
 
     render: function() {

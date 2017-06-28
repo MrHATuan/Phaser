@@ -33,4 +33,6 @@ Star.prototype.update = function(platforms, player) {
             this.initStar(this.stars, star.x, 0);
         }, this).autoDestroy = true;
     }, null, this);
+
+    this.game.physics.arcade.overlap(player, stars, collectStar, null, this);
 };
