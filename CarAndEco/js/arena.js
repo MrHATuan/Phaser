@@ -11,7 +11,7 @@ Arena = function(game) {
     var moneyLabel, pointLabel;
 
     this.moving = 0;
-    this.carUpDown = 1;
+    this.carDirection = 1;
 
     var cursors;
 };
@@ -105,15 +105,7 @@ Arena.prototype = {
 
         diceBg.onInputUp.add(gamePlay, this);
 
-        // if(this.carUpDown == 1){
-        //     console.log(this.carUpDown);
-        //     diceBg.onInputUp.add(gamePlayUp, this);
-        // } else {
-        //     console.log(this.carUpDown);
-        //     diceBg.onInputUp.add(gamePlayDown, this);
-        // }
-
-
+        // increment Money
         if(this.moneyBuffer > 0){
             this.moneyBuffer -= 2;
             this.money += 2;
@@ -133,11 +125,11 @@ function gamePlay() {
     diceAll.visible = false;
 
     var move = Math.floor(Math.random() * 4) + 1;
-    if(this.carUpDown == 1) {
+    if(this.carDirection == 1) {
         if ((this.moving + move) >= 10){
             move = 10 - this.moving;
             this.moving = 10;
-            this.carUpDown = 0;
+            this.carDirection = 0;
         } else {
             this.moving += move;
         }
@@ -146,18 +138,18 @@ function gamePlay() {
         if ((this.moving - move) <= 0){
             move = this.moving;
             this.moving = 0;
-            this.carUpDown = 1;
+            this.carDirection = 1;
         } else {
             this.moving -= move;
         }
         carDown(move, this);
     }
-    console.log('UpDown: ', this.carUpDown);
+    console.log('UpDown: ', this.carDirection);
     console.log("moving: ", this.moving);
     console.log("randomUp: ", move);
 
     this.game.time.events.add((move + 1) * 1100, function() {
-        if(this.carUpDown == 1) {
+        if(this.carDirection == 1) {
             this.car.frame = 0;
         } else {
             this.car.frame = 2;
@@ -197,6 +189,34 @@ function carDown(move, me) {
         }, me).autoDestroy = true;
     }, me).autoDestroy = true;
 };
+
+function carLeft(move, me) {
+    me.game.time.events.repeat(1000, move, function() {
+        var carY = me.car.y;
+        var carX = me.car.x;
+
+        me.game.add.tween(me.car).to( { x: carX + 74 }, 900, "Sine.easeInOut", true);
+        me.game.add.tween(me.car).to( { y: carY - 80 }, 400, "Sine.easeInOut", true);
+
+        me.game.time.events.add(500, function() {
+            me.game.add.tween(me.car).to( { y: carY - 43 }, 400, "Sine.easeInOut", true);
+        }, me).autoDestroy = true;
+    }, me).autoDestroy = true;
+};
+
+function carRight(move, me) {
+    me.game.time.events.repeat(1000, move, function() {
+        var carY = me.car.y;
+        var carX = me.car.x;
+
+        me.game.add.tween(me.car).to( { x: carX + 74 }, 900, "Sine.easeInOut", true);
+        me.game.add.tween(me.car).to( { y: carY - 80 }, 400, "Sine.easeInOut", true);
+
+        me.game.time.events.add(500, function() {
+            me.game.add.tween(me.car).to( { y: carY - 43 }, 400, "Sine.easeInOut", true);
+        }, me).autoDestroy = true;
+    }, me).autoDestroy = true;
+}
 
 function test(car, road) {
     switch(road.key) {
