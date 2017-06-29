@@ -23,6 +23,8 @@ Preloader.prototype = {
 
 
         this.load.spritesheet('carA', 'assets/images/cars/car_A.png', 66, 55, 4);
+
+        this.load.image('star', 'assets/images/star.png');
     },
 
     create: function () {

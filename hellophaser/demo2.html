@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Phaser Tutorial</title>
+    <script type="text/javascript" src="phaser/phaser.min.js"></script>
+
+    <style type="text/css">
+        body { margin: 0; }
+        canvas { margin: auto; }
+    </style>
+</head>
+<body>
+    <script type="text/javascript">
+        window.onload = function () {
+            var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser-example', { preload: preload, create: create, update: update });
+
+            function preload() {
+
+            };
+
+            var score, scoreBuffer;
+            var scoreLabel, scoreLabelTween;
+
+            function create() {
+                game.stage.backgroundColor = '#16a085';
+                //Keep track of the users score
+                score = 0;
+                scoreBuffer = 0;
+                //Create the score label
+                createScore();
+
+                var seed = Date.now();
+                game.random = new Phaser.RandomDataGenerator([seed]);
+
+                game.input.onUp.add(function(pointer){
+                    var newScore = game.random.integerInRange(1, 30);
+                    createScoreAnimation(pointer.x, pointer.y, '+'+newScore, newScore);
+                }, this);
+            };
+
+            function update() {
+                //While there is score in the score buffer, add it to the actual score
+                if(scoreBuffer > 0){
+                    incrementScore();
+                    scoreBuffer--;
+                }
+            };
+
+            function createScore(){
+                var scoreFont = "100px Arial";
+                //Create the score label
+                scoreLabel = game.add.text(game.world.centerX, 50, "0", {font: scoreFont, fill: "#ffffff", stroke: "#535353", strokeThickness: 15}); 
+                scoreLabel.anchor.setTo(0.5, 0);
+                scoreLabel.align = 'center';
+                //Create a tween to grow / shrink the score label
+                scoreLabelTween = game.add.tween(scoreLabel.scale).to({ x: 1.5, y: 1.5}, 1000, Phaser.Easing.Linear.In).to({ x: 1, y: 1}, 200, Phaser.Easing.Linear.In);
+            };
+
+            function incrementScore(){
+                //Increase the score by one and update the total score label text
+                score += 1;
+                scoreLabel.text = score;
+            };
+
+            function createScoreAnimation(x, y, message, score){
+                var me = this;
+
+                var scoreFont = "90px Arial";
+                //Create a new label for the score
+                var scoreAnimation = game.add.text(x, y, message, {font: scoreFont, fill: "#39d179", stroke: "#ffffff", strokeThickness: 15}); 
+                scoreAnimation.anchor.setTo(0.5, 0);
+                scoreAnimation.align = 'center';
+                // //Tween this score label to the total score label
+                var scoreTween = game.add.tween(scoreAnimation).to({x: game.world.centerX, y: 50}, 800, Phaser.Easing.Exponential.In, true);
+                // //When the animation finishes, destroy this score label, trigger the total score labels animation and add the score
+                scoreTween.onComplete.add(function(){
+                    scoreAnimation.destroy();
+                    scoreLabelTween.start();
+                    scoreBuffer += score;
+                }, this);
+            };
+
+        };
+    </script>
+</body>
+</html>
