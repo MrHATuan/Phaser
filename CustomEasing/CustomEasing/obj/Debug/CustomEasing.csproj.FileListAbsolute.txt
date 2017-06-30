@@ -1,0 +1,6 @@
+D:\MyHTML5Apps\CustomEasing\CustomEasing\bin\CustomEasing.dll.config
+D:\MyHTML5Apps\CustomEasing\CustomEasing\bin\CustomEasing.dll
+D:\MyHTML5Apps\CustomEasing\CustomEasing\bin\CustomEasing.pdb
+D:\MyHTML5Apps\CustomEasing\CustomEasing\obj\Debug\CustomEasing.csprojResolveAssemblyReference.cache
+D:\MyHTML5Apps\CustomEasing\CustomEasing\obj\Debug\CustomEasing.dll
+D:\MyHTML5Apps\CustomEasing\CustomEasing\obj\Debug\CustomEasing.pdb
