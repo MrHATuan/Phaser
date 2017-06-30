@@ -46,31 +46,79 @@ Arena.prototype = {
         // Create roads
         this.roads = gameplayBg.addChild(this.game.add.group());
         this.roads.enableBody =  true;
-        for (var i = 1; i < 11; i++) {
+        for (var i = 1; i <= 4; i++) {
             switch(Math.floor(Math.random() * 4) + 1) {
                 case 1:
-                    var road = this.roads.create(10 + i * 74, gameplayBg.height - 70 - i * 43, 'road1');
+                    var road = this.roads.create(10 + i * 74, 180 - i * 43, 'road1');
                     road.body.immovable = true;
                     break;
                 case 2:
-                    var road = this.roads.create(10 + i * 74, gameplayBg.height - 70 - i * 43, 'road2');
+                    var road = this.roads.create(10 + i * 74, 180 - i * 43, 'road2');
                     road.body.immovable = true;
                     break;
                 case 3:
-                    var road = this.roads.create(10 + i * 74, gameplayBg.height - 70 - i * 43, 'road3');
+                    var road = this.roads.create(10 + i * 74, 180 - i * 43, 'road3');
                     road.body.immovable = true;
                     break;
                 case 4:
-                    var road = this.roads.create(10 + i * 74, gameplayBg.height - 70 - i * 43, 'road4');
+                    var road = this.roads.create(10 + i * 74, 180 - i * 43, 'road4');
                     road.body.immovable = true;
                     break;
                 default:
                     break;
             }
         }
+        for (var i = 1; i <= 2; i++) {
+            switch(Math.floor(Math.random() * 4) + 1) {
+                case 1:
+                    var road = this.roads.create(306 + i * 74, 8 + i * 43, 'road1');
+                    road.body.immovable = true;
+                    break;
+                case 2:
+                    var road = this.roads.create(306 + i * 74, 8 + i * 43, 'road2');
+                    road.body.immovable = true;
+                    break;
+                case 3:
+                    var road = this.roads.create(306 + i * 74, 8 + i * 43, 'road3');
+                    road.body.immovable = true;
+                    break;
+                case 4:
+                    var road = this.roads.create(306 + i * 74, 8 + i * 43, 'road4');
+                    road.body.immovable = true;
+                    break;
+                default:
+                    break;
+            }
+        }
+        for (var i = 1; i <= 5; i++) {
+            switch(Math.floor(Math.random() * 4) + 1) {
+                case 1:
+                    var road = this.roads.create(454 - i * 74, 94 + i * 43, 'road1');
+                    road.body.immovable = true;
+                    break;
+                case 2:
+                    var road = this.roads.create(454 - i * 74, 94 + i * 43, 'road2');
+                    road.body.immovable = true;
+                    break;
+                case 3:
+                    var road = this.roads.create(454 - i * 74, 94 + i * 43, 'road3');
+                    road.body.immovable = true;
+                    break;
+                case 4:
+                    var road = this.roads.create(454 - i * 74, 94 + i * 43, 'road4');
+                    road.body.immovable = true;
+                    break;
+                default:
+                    break;
+            }
+        }
+        var road = this.roads.create(84 - 74, 309 - 43, 'road4');
+        road.body.immovable = true;
+
 
         // Create Car
-        this.car = gameplayBg.addChild(this.game.add.sprite(15, gameplayBg.height - 80, 'carA'));
+        // this.car = gameplayBg.addChild(this.game.add.sprite(15, gameplayBg.height - 80, 'carA'));
+        this.car = gameplayBg.addChild(this.game.add.sprite(15, 170, 'carA'));
         this.game.physics.arcade.enable(this.car);
 
         // Create Money
