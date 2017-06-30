@@ -3,7 +3,6 @@ Arena = function(game) {
 
     var background, gameplayBg, factoryBg, diceBg, diceAll, diceRandom, dice;
     var factoryGround, factory1, factory1_1, factory3, factory3_1, factory4, factory4_1, factory5, factory5_1;
-    var factoryTween1, factoryTween1_1, factoryTween3, factoryTween3_1, factoryTween4, factoryTween4_1, factoryTween5, factoryTween5_1;
 
     this.roads;
     this.car;
@@ -44,37 +43,22 @@ Arena.prototype = {
         var factoryGroup = factoryGround.addChild(this.game.add.group());
         factory1 = factoryGroup.create(75, 24, 'factory1');
         factory1_1 = factoryGroup.create(72, -155, 'factory1_1');
-        factory1_1.visible = false;
         factory3 = factoryGroup.create(191, 118, 'factory3');
         factory3_1 = factoryGroup.create(183, -90, 'factory3_1');
-        factory3_1.visible = false;
         factory4 = factoryGroup.create(6, 155, 'factory4');
         factory4_1 = factoryGroup.create(3, -102, 'factory4_1');
-        factory4_1.visible = false;
         factory5 = factoryGroup.create(39, 107, 'factory5');
         factory5_1 = factoryGroup.create(32, -95, 'factory5_1');
-        factory5_1.visible = false;
 
         //  A mask is a Graphics object
-        // var maskFactory = factoryGround.addChild(this.game.add.graphics(0, 0));
-        // maskFactory.beginFill(0xffffff);
-        // maskFactory.drawRect(74, -148, 200, 309);
-        // maskFactory.drawRect(188, -78, 124, 276);
-        // maskFactory.drawRect(3, -102, 126, 332);
-        // maskFactory.drawRect(32, -95, 113, 278);
+        var maskFactory = factoryGround.addChild(this.game.add.graphics(0, 0));
+        maskFactory.beginFill(0xffffff);
+        maskFactory.drawRect(74, 0, 200, 161);
+        maskFactory.drawRect(188, 0, 124, 198);
+        maskFactory.drawRect(3, 0, 126, 230);
+        maskFactory.drawRect(32, 0, 113, 183);
         // //  And apply it to the Group itself
-        // factoryGroup.mask = maskFactory;
-
-        // this.game.add.tween(factory1).to({ y: -148 }, 1000, "Sine.easeInOut", true, 0, -1, true);
-        // this.game.add.tween(factory3).to({ y: -78 }, 1000, "Sine.easeInOut", true, 0, -1, true);
-        // this.game.add.tween(factory4).to({ y: -102 }, 1000, "Sine.easeInOut", true, 0, -1, true);
-        // this.game.add.tween(factory5).to({ y: -95 }, 1000, "Sine.easeInOut", true, 0, -1, true);
-        // this.game.add.tween(factory1_1).to({ y:3 }, 1000, "Sine.easeInOut", true, 0, -1, true);
-        // this.game.add.tween(factory3_1).to({ y: 111 }, 1000, "Sine.easeInOut", true, 0, -1, true);
-        // this.game.add.tween(factory4_1).to({ y: 165 }, 1000, "Sine.easeInOut", true, 0, -1, true);
-        // this.game.add.tween(factory5_1).to({ y: 109 }, 1000, "Sine.easeInOut", true, 0, -1, true);
-
-        var factoryBg1  = background.addChild(this.game.add.sprite(578, 118, 'factoryBg'));
+        factoryGroup.mask = maskFactory;
 
         // Create roads
         this.roads = gameplayBg.addChild(this.game.add.group());
@@ -195,20 +179,6 @@ Arena.prototype = {
     },
 
     update: function() {
-        // this.game.physics.arcade.overlap(this.car, this.roads, test, null, this);
-
-        // if (cursors.left.isDown) {
-        //     this.car.body.velocity.x = -150;
-        // } else if (cursors.right.isDown) {
-        //     this.car.body.velocity.x = 150;
-        // } else if (cursors.up.isDown) {
-        //     this.car.body.velocity.y = -150;
-        // } else if (cursors.down.isDown) {
-        //     this.car.body.velocity.y = 150;
-        // } else {
-        //     this.car.body.velocity.x = 0;
-        //     this.car.body.velocity.y = 0;
-        // }
         if(this.moving < 13) {
             diceBg.onInputUp.add(gamePlay, this);
         }
@@ -219,10 +189,6 @@ Arena.prototype = {
             this.money += 2;
             moneyLabel.setText(this.money);
         }
-    },
-
-    render: function() {
-
     },
 };
 
@@ -329,9 +295,9 @@ function gamePlay() {
         }
 
         this.moving += move;
+        console.log("random: ", move);
+        console.log("moving: ", this.moving);
     }, this).autoDestroy = true;
-    console.log("random: ", move);
-    console.log("moving: ", this.moving);
 
     this.game.time.events.add((move + 1) * 1100 + 1500, function() {
         if(this.carDirection == 0) {
@@ -453,7 +419,7 @@ function randomDice(me, random) {
                 break;
             default:
                 break;
-            }
+        }
     }, me);
 }
 
@@ -463,8 +429,6 @@ function checkRoad(car, road) {
             if(this.building == 0) {
                 var factoryTween = this.game.add.tween(factory1).to({ y: -148 }, 1000, "Sine.easeInOut", true);
                 factoryTween.onComplete.add(function() {
-                    factory1.visible = false;
-                    factory1_1.visible = true;
                     this.game.add.tween(factory1_1).to({ y:3 }, 1000, "Sine.easeInOut", true);
                 }, this);
 
@@ -472,30 +436,24 @@ function checkRoad(car, road) {
             } else if(this.building == 1) {
                 var factoryTween = this.game.add.tween(factory3).to({ y: -78 }, 1000, "Sine.easeInOut", true);
                 factoryTween.onComplete.add(function() {
-                    factory3.visible = false;
-                    factory3_1.visible = true;
                     this.game.add.tween(factory3_1).to({ y: 111 }, 1000, "Sine.easeInOut", true);
-                }, this);
-
-                this.building = 2;
-            } else if(this.building == 2) {
-                var factoryTween = this.game.add.tween(factory4).to({ y: -102 }, 1000, "Sine.easeInOut", true);
-                factoryTween.onComplete.add(function() {
-                    factory4.visible = false;
-                    factory4_1.visible = true;
-                    this.game.add.tween(factory4_1).to({ y: 165 }, 1000, "Sine.easeInOut", true);
                 }, this);
 
                 this.building = 3;
             } else if(this.building == 3) {
-                var factoryTween = this.game.add.tween(factory5).to({ y: -95 }, 1000, "Sine.easeInOut", true);
+                var factoryTween = this.game.add.tween(factory4).to({ y: -102 }, 1000, "Sine.easeInOut", true);
                 factoryTween.onComplete.add(function() {
-                    factory5.visible = false;
-                    factory5_1.visible = true;
-                    this.game.add.tween(factory5_1).to({ y: 109 }, 1000, "Sine.easeInOut", true);
+                    this.game.add.tween(factory4_1).to({ y: 165 }, 1000, "Sine.easeInOut", true);
                 }, this);
 
                 this.building = 4;
+            } else if(this.building == 4) {
+                var factoryTween = this.game.add.tween(factory5).to({ y: -95 }, 1000, "Sine.easeInOut", true);
+                factoryTween.onComplete.add(function() {
+                    this.game.add.tween(factory5_1).to({ y: 109 }, 1000, "Sine.easeInOut", true);
+                }, this);
+
+                this.building = -1;
             } else {
                 console.log("build all factory");
             }

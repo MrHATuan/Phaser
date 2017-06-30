@@ -5,6 +5,7 @@ Preloader = function () {
 Preloader.prototype = {
     preload: function () {
         this.load.image('background', 'assets/images/background.png');
+
         this.load.image('gameplayBg', 'assets/images/bg_game.png');
         this.load.spritesheet('diceBg', 'assets/images/bg_dice.png', 222, 222, 52);
         this.load.spritesheet('diceAll', 'assets/images/ss_all.png', 83, 82, 12);
@@ -30,7 +31,6 @@ Preloader.prototype = {
 
         this.load.spritesheet('carA', 'assets/images/cars/car_A.png', 66, 55, 4);
 
-        this.load.image('star', 'assets/images/star.png');
     },
 
     create: function () {
