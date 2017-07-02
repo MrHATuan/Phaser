@@ -1,13 +1,12 @@
-Map = function(game, arena, parent, x, y) {
-    this.initMap(game, parent, x, y);
+Map = function(game, parent) {
+    this.initMap(game, parent);
 };
 
-Map.prototype.initMap = function(game, parent, x, y) {
+Map.prototype.initMap = function(game, parent) {
     this.game = game;
-    this.arena = arena;
 
     // Create roads
-    this.roads = gameplayBg.addChild(this.game.add.group());
+    this.roads = parent.addChild(this.game.add.group());
     this.roads.enableBody =  true;
     for (var i = 1; i <= 4; i++) {
         switch(Math.floor(Math.random() * 4) + 1) {
@@ -100,16 +99,16 @@ Map.prototype.initMap = function(game, parent, x, y) {
 Map.prototype.checkRoad = function(car, road) {
     switch(road.key) {
         case "road1":
-
+            this.factory.buildingFactory();
             break;
         case "road2":
-
+            this.score.upMoney(100);
             break;
         case "road3":
-
+            this.score.upPoint(1);
             break;
         case "road4":
-
+            this.score.upPoint(-1);
             break;
         default:
             break;
