@@ -12,13 +12,13 @@ Factory.prototype.initFactory = function(game, parent, x, y) {
     var factoryGround = parent.addChild(this.game.add.sprite(x, y, 'factoryGround'));
 
     var factoryGroup = factoryGround.addChild(this.game.add.group());
-    factory1 = factoryGroup.create(75, 24, 'factory1');
+    factory1   = factoryGroup.create(75, 24, 'factory1');
     factory1_1 = factoryGroup.create(72, -155, 'factory1_1');
-    factory3 = factoryGroup.create(191, 118, 'factory3');
+    factory3   = factoryGroup.create(191, 118, 'factory3');
     factory3_1 = factoryGroup.create(183, -90, 'factory3_1');
-    factory4 = factoryGroup.create(6, 155, 'factory4');
+    factory4   = factoryGroup.create(6, 155, 'factory4');
     factory4_1 = factoryGroup.create(3, -102, 'factory4_1');
-    factory5 = factoryGroup.create(39, 107, 'factory5');
+    factory5   = factoryGroup.create(39, 107, 'factory5');
     factory5_1 = factoryGroup.create(32, -95, 'factory5_1');
 
     //  A mask is a Graphics object

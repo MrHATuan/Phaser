@@ -31,6 +31,19 @@ Preloader.prototype = {
 
         this.load.spritesheet('carA', 'assets/images/cars/car_A.png', 66, 55, 4);
 
+
+        // // add
+        // var loadingBar = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY,"loading");
+        // loadingBar.anchor.setTo(0.5,0.5);
+        // this.game.load.setPreloadSprite(loadingBar);
+        // this.load.json('map', 'assets/map/map.json');
+        // this.load.spritesheet('mapsheet', 'assets/map/sheet.png', 110, 64, 2);
+
+        // this.load.image('bg', 'assets/img/bg.png');
+        // this.load.image('border', 'assets/img/border.png');
+        // this.load.image('right_frame', 'assets/img/right_frame.png');
+        // this.load.spritesheet('car', 'assets/img/car.png', 66, 52, 4);
+
     },
 
     create: function () {

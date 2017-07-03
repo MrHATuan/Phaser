@@ -244,3 +244,46 @@ function randomDice(me, random) {
         }
     }, me);
 }
+
+
+var Main = function(game){}
+
+// Main.prototype = {
+//     create: function(){
+//         var bg = this.game.add.sprite(0, 0, 'bg');
+//         bg.fixedToCamera = true;
+
+//         var border = this.game.add.sprite(0, 100, 'border');
+//         border.fixedToCamera = true;
+
+//         var right_frame = this.game.add.sprite(border.width+10, 118, 'right_frame');
+//         right_frame.fixedToCamera = true;
+
+
+//         var map = new Map(this.game);
+//         map.loadMap('map', 'mapsheet');
+//         map.createLayer('map');
+
+//         var mask = this.game.add.graphics(0, 0);
+//         //  Shapes drawn to the Graphics object must be filled.
+//         mask.beginFill(0xffffff);
+//         mask.drawRect(8, 108, border.width-21, border.height-21);
+//         //  And apply it to the Group itself
+//         map.isometricControl.tileGroup.mask = mask;
+//         mask.fixedToCamera = true;
+
+//         var car_x = 632;
+//         var car_y = 960;
+//         var player = this.game.add.sprite(car_x, car_y, 'car');
+//         this.game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON);
+//         this.game.camera.deadzone = new Phaser.Rectangle(100, 300, 10, 10);
+
+//         var cursors = this.game.input.keyboard.createCursorKeys();
+//     },
+//     update: function() {
+
+//     },
+//     render: function() {
+//         // debug
+//     }
+// }

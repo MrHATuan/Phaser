@@ -8,6 +8,8 @@ Car.prototype.initCar = function(game, parent, x, y) {
     this.game = game;
 
     this.direction = 0;
+    this.level = 0;
+    this.position = [];
 
     this.car = parent.addChild(this.game.add.sprite(x, y, 'carA'));
     this.game.physics.arcade.enable(this.car);
