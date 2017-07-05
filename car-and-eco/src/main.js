@@ -2,12 +2,9 @@ var Main = function(game){
     this.game = game;
 
     var map,
-    car,
-    factory;
+    car;
 
     var diceBg, diceAll, diceRandom, dice;
-
-    var cursors;
 };
 
 Main.prototype = {
@@ -26,25 +23,21 @@ Main.prototype = {
         map.loadMap('map', 'mapsheet');
         map.createLayer('map');
 
-        console.log(map.isometricControl);
-
         var mask = this.game.add.graphics(0, 0);
         //  Shapes drawn to the Graphics object must be filled.
         mask.beginFill(0xffffff);
         mask.drawRect(10, 100, border.width - 10, border.height - 10);
         //  And apply it to the Group itself
-        map.isometricControl.tileGroup.mask = mask;
+        map.tiles.mask = mask;
         mask.fixedToCamera = true;
 
         // New Car
-        car = new Car(this.game, 687, 928);
+        var car_position = map.getTile(map.start_position);
+        var car_x = car_position.x+24;
+        var car_y = car_position.y+8;
+        car = new Car(this.game, car_x, car_y);
 
-        this.game.camera.x = 542;
-        this.game.camera.y = 638;
-
-        factory =  new Factory(this.game, right_frame, 12, 83);
-
-        // this.game.camera.deadzone = new Phaser.Rectangle(100, 300, 10, 10);
+        this.game.camera.deadzone = new Phaser.Rectangle(100, 300, 10, 10);
 
         // Create duce
         diceBg = border.addChild(this.game.add.button(340, 140, 'diceBg'));
@@ -65,25 +58,11 @@ Main.prototype = {
         dice.visible = false;
 
         // Input
-        cursors = this.game.input.keyboard.createCursorKeys();
+        var cursors = this.game.input.keyboard.createCursorKeys();
     },
 
     update: function() {
         diceBg.onInputUp.add(gamePlay, this);
-
-        if (cursors.up.isDown) {
-            this.game.camera.y -= 5;
-        }
-        if (cursors.down.isDown) {
-            this.game.camera.y += 5;
-        }
-        if (cursors.left.isDown) {
-            this.game.camera.x -= 5;
-        }
-        if (cursors.right.isDown) {
-            this.game.camera.x += 5;
-        }
-
     },
 
     render: function() {
@@ -98,22 +77,19 @@ function gamePlay() {
     diceAll.visible = false;
     diceRandom.visible = true;
 
-    var random = Math.floor(Math.random() * 6) + 1;
+    var random = Math.floor(Math.random() * 4) + 1;
     // Dice animation
     randomDice(this, random);
     // Wait time animation end
     this.game.time.events.add(1500, function() {
-        // car.jumpTo(random);
-        factory.buildingFactory(4);
+        car.jumpTo(random, map);
     }, this).autoDestroy = true;
     // Wait game play end
-    this.game.time.events.add(((random + 1) * 1100) + 1500, function() {
+    this.game.time.events.add((random + 1) * 1000 + 1500, function() {
         diceAll.visible = true;
         diceBg.visible = true;
         dice.visible = false;
         diceBg.animations.play('open');
-        // this.game.camera.x += (55 * random);
-        // this.game.camera.y -= (55 * random);
     }, this).autoDestroy = true;
 }
 
