@@ -21,16 +21,16 @@ Preload.prototype = {
         this.load.spritesheet('diceRandom', 'assets/img/dice/dice_random.png', 83, 83, 50);
         // factory
         this.load.image('factoryGround', 'assets/img/factory/ground.png');
-        this.load.image('factory1', 'assets/img/factory/factory1.png');
-        this.load.image('factory1_1', 'assets/img/factory/factory1_1.png');
-        this.load.image('factory1_2', 'assets/img/factory/factory1_2.png');
-        this.load.image('factory2', 'assets/img/factory/factory2.png');
-        this.load.image('factory3', 'assets/img/factory/factory3.png');
-        this.load.image('factory3_1', 'assets/img/factory/factory3_1.png');
-        this.load.image('factory4', 'assets/img/factory/factory4.png');
-        this.load.image('factory4_1', 'assets/img/factory/factory4_1.png');
-        this.load.image('factory5', 'assets/img/factory/factory5.png');
-        this.load.image('factory5_1', 'assets/img/factory/factory5_1.png');
+        this.load.image('factory', 'assets/img/factory/factory.png');
+        this.load.image('mainFactory', 'assets/img/factory/mainFactory.png');
+        this.load.image('factoryNew', 'assets/img/factory/factoryNew.png');
+        this.load.image('solarFactory', 'assets/img/factory/solarFactory.png');
+        this.load.image('recycleFactory', 'assets/img/factory/recycleFactory.png');
+        this.load.image('recycleFactoryNew', 'assets/img/factory/recycleFactoryNew.png');
+        this.load.image('emissionFactory', 'assets/img/factory/emissionFactory.png');
+        this.load.image('emissionFactoryNew', 'assets/img/factory/emissionFactoryNew.png');
+        this.load.image('waterFactory', 'assets/img/factory/waterFactory.png');
+        this.load.image('waterFactoryNew', 'assets/img/factory/waterFactoryNew.png');
     },
     create: function(){
         this.game.state.start("Main");

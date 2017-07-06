@@ -2,7 +2,8 @@ var Main = function(game){
     this.game = game;
 
     var map,
-    car;
+    car,
+    factory;
 
     var diceBg, diceAll, diceRandom, dice;
 };
@@ -37,7 +38,8 @@ Main.prototype = {
         var car_y = car_position.y+8;
         car = new Car(this.game, car_x, car_y);
 
-        this.game.camera.deadzone = new Phaser.Rectangle(100, 300, 10, 10);
+        // Add Factory
+        factory = new Factory(this.game, right_frame);
 
         // Create duce
         diceBg = border.addChild(this.game.add.button(340, 140, 'diceBg'));
@@ -57,87 +59,92 @@ Main.prototype = {
         dice = border.addChild(this.game.add.sprite(50 , 50, 'dice'));
         dice.visible = false;
 
+        this.game.camera.deadzone = new Phaser.Rectangle(100, 300, 10, 10);
+
         // Input
         var cursors = this.game.input.keyboard.createCursorKeys();
     },
 
     update: function() {
-        diceBg.onInputUp.add(gamePlay, this);
+        diceBg.onInputUp.add(this.gamePlay, this);
     },
 
     render: function() {
         // debug
+    },
+
+    gamePlay: function() {
+        diceBg.animations.play('close').onComplete.add(function() {
+            diceBg.visible = false;
+        }, this);
+        diceAll.visible = false;
+        diceRandom.visible = true;
+        // Get Random
+        var random = Math.floor(Math.random() * 4) + 1;
+        // Dice animation
+        this.randomDice(random);
+
+        // Wait time animation end
+        this.game.time.events.add(1500, function() {
+            car.jumpTo(random, map);
+            factory.buildFactory("mainFactory");
+        }, this).autoDestroy = true;
+
+        // Wait game play end
+        this.game.time.events.add((random + 1) * 1000 + 1500, function() {
+            diceAll.visible = true;
+            diceBg.visible = true;
+            dice.visible = false;
+            diceBg.animations.play('open');
+        }, this).autoDestroy = true;
+    },
+
+    randomDice: function(random) {
+        diceRandom.animations.play('random', 50, true);
+
+        this.game.add.tween(diceRandom).to( { x: 250 }, 800, "Sine.easeInOut", true);
+        this.game.add.tween(diceRandom).to( { y: 10 }, 350, "Sine.easeInOut", true);
+
+        this.game.time.events.add(400, function() {
+            this.game.add.tween(diceRandom).to( { y: 150 }, 350, "Sine.easeInOut", true);
+        }, this).autoDestroy = true;
+
+        this.game.time.events.add(800, function() {
+            this.game.add.tween(diceRandom).to( { x: 50 }, 600, "Sine.easeInOut", true);
+            this.game.add.tween(diceRandom).to( { y: 70 }, 250, "Sine.easeInOut", true);
+
+            this.game.time.events.add(300, function() {
+                this.game.add.tween(diceRandom).to( { y: 50 }, 250, "Sine.easeInOut", true);
+            }, this).autoDestroy = true;
+        }, this);
+
+        this.game.time.events.add(1500, function() {
+            diceRandom.visible = false;
+            diceRandom.x = 410;
+            diceRandom.y = 210;
+            dice.visible = true;
+            switch(random) {
+                case 1:
+                    dice.frame = 0;
+                    break;
+                case 2:
+                    dice.frame = 1;
+                    break;
+                case 3:
+                    dice.frame = 2;
+                    break;
+                case 4:
+                    dice.frame = 3;
+                    break;
+                case 5:
+                    dice.frame = 4;
+                    break;
+                case 6:
+                    dice.frame = 5;
+                    break;
+                default:
+                    break;
+            }
+        }, this);
     }
-}
-
-function gamePlay() {
-    diceBg.animations.play('close').onComplete.add(function() {
-        diceBg.visible = false;
-    }, this);
-    diceAll.visible = false;
-    diceRandom.visible = true;
-
-    var random = Math.floor(Math.random() * 4) + 1;
-    // Dice animation
-    randomDice(this, random);
-    // Wait time animation end
-    this.game.time.events.add(1500, function() {
-        car.jumpTo(random, map);
-    }, this).autoDestroy = true;
-    // Wait game play end
-    this.game.time.events.add((random + 1) * 1000 + 1500, function() {
-        diceAll.visible = true;
-        diceBg.visible = true;
-        dice.visible = false;
-        diceBg.animations.play('open');
-    }, this).autoDestroy = true;
-}
-
-function randomDice(me, random) {
-    diceRandom.animations.play('random', 50, true);
-
-    me.game.add.tween(diceRandom).to( { x: 250 }, 800, "Sine.easeInOut", true);
-    me.game.add.tween(diceRandom).to( { y: 10 }, 350, "Sine.easeInOut", true);
-
-    me.game.time.events.add(400, function() {
-        me.game.add.tween(diceRandom).to( { y: 150 }, 350, "Sine.easeInOut", true);
-    }, me).autoDestroy = true;
-
-    me.game.time.events.add(800, function() {
-        me.game.add.tween(diceRandom).to( { x: 50 }, 600, "Sine.easeInOut", true);
-        me.game.add.tween(diceRandom).to( { y: 70 }, 250, "Sine.easeInOut", true);
-
-        me.game.time.events.add(300, function() {
-            me.game.add.tween(diceRandom).to( { y: 50 }, 250, "Sine.easeInOut", true);
-        }, me).autoDestroy = true;
-    }, me);
-
-    me.game.time.events.add(1500, function() {
-        diceRandom.visible = false;
-        diceRandom.x = 410;
-        diceRandom.y = 210;
-        dice.visible = true;
-        switch(random) {
-            case 1:
-                dice.frame = 0;
-                break;
-            case 2:
-                dice.frame = 1;
-                break;
-            case 3:
-                dice.frame = 2;
-                break;
-            case 4:
-                dice.frame = 3;
-                break;
-            case 5:
-                dice.frame = 4;
-                break;
-            case 6:
-                dice.frame = 5;
-                break;
-            default:
-                break;
-        }
-    }, me);
 }
