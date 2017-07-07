@@ -31,6 +31,36 @@ Preload.prototype = {
         this.load.image('emissionFactoryNew', 'assets/img/factory/emissionFactoryNew.png');
         this.load.image('waterFactory', 'assets/img/factory/waterFactory.png');
         this.load.image('waterFactoryNew', 'assets/img/factory/waterFactoryNew.png');
+        // factory Icon
+        this.load.image('iconMain', 'assets/img/factory/factory_icon/icon_main.png');
+        this.load.image('iconMainCover', 'assets/img/factory/factory_icon/icon_mainCover.png');
+        this.load.image('iconSolar', 'assets/img/factory/factory_icon/icon_solar.png');
+        this.load.image('iconSolarCover', 'assets/img/factory/factory_icon/icon_solarCover.png');
+        this.load.image('iconRecycle', 'assets/img/factory/factory_icon/icon_recycle.png');
+        this.load.image('iconRecycleCover', 'assets/img/factory/factory_icon/icon_recycleCover.png');
+        this.load.image('iconEmissions', 'assets/img/factory/factory_icon/icon_emissions.png');
+        this.load.image('iconEmissionsCover', 'assets/img/factory/factory_icon/icon_emissionsCover.png');
+        this.load.image('iconWater', 'assets/img/factory/factory_icon/icon_water.png');
+        this.load.image('iconWaterCover', 'assets/img/factory/factory_icon/icon_waterCover.png');
+        // Buy Factory
+        this.load.image('buyFactoryBg', 'assets/img/factory/factory_buy/bg_buy_factory.png');
+        this.load.image('buyFactoryBorder', 'assets/img/factory/factory_buy/buy_factory_border.png');
+        this.load.image('buyMain', 'assets/img/factory/factory_buy/buy_main.png');
+        this.load.image('buySolar', 'assets/img/factory/factory_buy/buy_solar.png');
+        this.load.image('buyRecycle', 'assets/img/factory/factory_buy/buy_recycle.png');
+        this.load.image('buyEmssion', 'assets/img/factory/factory_buy/buy_emssion.png');
+        this.load.image('buyWater', 'assets/img/factory/factory_buy/buy_water.png');
+        this.load.image('investOk', 'assets/img/factory/factory_buy/invest_ok.png');
+        this.load.image('moneyBg', 'assets/img/factory/factory_buy/money_bg.png');
+        this.load.image('buyFactoryNoti', 'assets/img/factory/factory_buy/notification.png');
+
+        // Buttons
+        this.load.spritesheet('btnClose1', 'assets/img/button/btn_close1.png', 97, 33, 3);
+        this.load.spritesheet('btnClose2', 'assets/img/button/btn_close2.png', 145, 44, 3);
+        this.load.spritesheet('btnBack', 'assets/img/button/btn_back.png', 49, 41, 3);
+
+        this.load.spritesheet('btnBuyFactory', 'assets/img/button/btn_buy_factory.png', 153, 33, 3);
+
     },
     create: function(){
         this.game.state.start("Main");

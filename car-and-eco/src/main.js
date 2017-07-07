@@ -1,6 +1,4 @@
 var Main = function(game){
-    this.game = game;
-
     var map,
     car,
     factory;
@@ -39,7 +37,7 @@ Main.prototype = {
         car = new Car(this.game, car_x, car_y);
 
         // Add Factory
-        factory = new Factory(this.game, right_frame);
+        factory = new Factory(this.game, right_frame, border, this);
 
         // Create duce
         diceBg = border.addChild(this.game.add.button(340, 140, 'diceBg'));
@@ -50,6 +48,7 @@ Main.prototype = {
         diceAll = diceBg.addChild(this.game.add.sprite(70, 70, 'diceAll'));
         diceAll.animations.add('turn');
         diceAll.animations.play('turn', 30, true);
+
         // Create dice random
         diceRandom = border.addChild(this.game.add.sprite(410 , 210, 'diceAll'));
         diceRandom.animations.add('random');
@@ -86,17 +85,25 @@ Main.prototype = {
 
         // Wait time animation end
         this.game.time.events.add(1500, function() {
-            car.jumpTo(random, map);
-            factory.buildFactory("mainFactory");
+            car.jumpTo(random, map, factory);
+            // factory.startBuiding();
         }, this).autoDestroy = true;
 
         // Wait game play end
         this.game.time.events.add((random + 1) * 1000 + 1500, function() {
-            diceAll.visible = true;
-            diceBg.visible = true;
             dice.visible = false;
-            diceBg.animations.play('open');
         }, this).autoDestroy = true;
+    },
+
+    // Wait game play end
+    resetGamePlay: function() {
+        // Hide buy Factory Main
+        factory.resetBuyFactoryPosition();
+        // Reset Dice
+        diceAll.visible = true;
+        diceBg.visible = true;
+        dice.visible = false;
+        diceBg.animations.play('open');
     },
 
     randomDice: function(random) {

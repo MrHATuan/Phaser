@@ -76,15 +76,14 @@ Car.prototype = {
         this.game.time.events.repeat(1000, move, function() {
             // check goUp or turnLeft or turnRight
             if (map.getNextDirection(this.position) === 'up') {
-                this.position = map.getTilePosition(this.position, 1);
                 this.goUp();
             } else if (map.getNextDirection(this.position) === 'left') {
-                this.position = map.getTilePosition(this.position, 1);
                 this.turnLeft();
             } else {
-                this.position = map.getTilePosition(this.position, 1);
                 this.turnRight();
             }
+
+            this.position = map.getTilePosition(this.position, 1);
         }, this).autoDestroy = true;
 
         // Check direction after jump
@@ -96,6 +95,9 @@ Car.prototype = {
             } else {
                 this.car.frame = 2;
             }
+            // Call event (Demo factory)
+            factory.startBuiding();
+
         }, this).autoDestroy = true;
     },
 
