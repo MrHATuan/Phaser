@@ -7,7 +7,7 @@ var Factory = function(game, parentFactory, parentBuyFactory, main){
 
     var iconMainCover, iconSolarCover, iconRecycleCover, iconEmissionsCover, iconWaterCover;
 
-    var buildFactoryBg, buyFactoryBorder, buyFactoryGroup;
+    var buyFactoryBg, buyFactoryBorder, buyFactoryGroup, buyFactoryNoti;
 
     var btnClose, btnBack;
     
@@ -15,8 +15,8 @@ var Factory = function(game, parentFactory, parentBuyFactory, main){
         buyMain: {name: "buyMain", jpName: "最新省エネ機械", price: 80, eco: 6, ecoChip: 2, built: 0},
         buySolar: {name: "buySolar", jpName: "太陽光パネル", price: 40, eco: 4, ecoChip: 1, built: 0},
         buyRecycle: {name: "buyRecycle", jpName: "リサイクル工場", price: 100, eco: 8, ecoChip: 3, built: 0},
-        buyEmssion: {name: "buyEmssion", jpName: "水質浄化(すいしつじょうか)そうち", price: 120, eco: 10, ecoChip: 3, built: 0},
-        buyWater: {name: "buyWater", jpName: "空気浄化(じょうか)そうち", price: 120, eco: 10, ecoChip: 3, built: 0},
+        buyEmssion: {name: "buyEmssion", jpName: "空気浄化(じょうか)そうち", price: 120, eco: 10, ecoChip: 3, built: 0},
+        buyWater: {name: "buyWater", jpName: "水質浄化(すいしつじょうか)そうち", price: 120, eco: 10, ecoChip: 3, built: 0},
     };
 
     this.invest = 0;
@@ -68,8 +68,8 @@ Factory.prototype = {
     },
 
     initBuyFactory: function(parent) {
-        buildFactoryBg   = parent.addChild(this.game.add.sprite(550, 8, 'buyFactoryBg'));
-        buyFactoryBorder = buildFactoryBg.addChild(this.game.add.sprite(8, 80, 'buyFactoryBorder'));
+        buyFactoryBg   = parent.addChild(this.game.add.sprite(550, 8, 'buyFactoryBg'));
+        buyFactoryBorder = buyFactoryBg.addChild(this.game.add.sprite(8, 80, 'buyFactoryBorder'));
         buyFactoryBorder.alpha = 0;
 
         buyFactoryGroup = buyFactoryBorder.addChild(this.game.add.group());
@@ -110,16 +110,15 @@ Factory.prototype = {
         var maskBuyFactory = parent.addChild(this.game.add.graphics(0, 0));
         maskBuyFactory.beginFill(0xffffff);
         maskBuyFactory.drawRect(8, 8, 541, 342);
-        buildFactoryBg.mask = maskBuyFactory;
+        buyFactoryBg.mask = maskBuyFactory;
     },
 
     startBuiding: function() {
         if (this.invest < 5) {
-            var buyFactoryTween = this.game.add.tween(buildFactoryBg).to({ x: 8 }, 1000, "Sine.easeInOut", true);
+            var buyFactoryTween = this.game.add.tween(buyFactoryBg).to({ x: 8 }, 1000, "Sine.easeInOut", true);
 
             buyFactoryTween.onComplete.add(function() {
                 this.game.add.tween(buyFactoryBorder).to({ alpha: 1 }, 500, "Linear", true);
-                // this.notification("最新省エネ機械", 6, 2);
             }, this);
         } else {
             console.log("You built all Building");
@@ -133,40 +132,40 @@ Factory.prototype = {
                 if(solarFactory.y > 0) {
                     solarFactory.y = -158;
 
-                    var factoryTween = this.game.add.tween(myFactory).to({ y: -137 }, 1000, "Sine.easeInOut", true);
+                    var factoryTween = this.game.add.tween(myFactory).to({ y: -137 }, 800, "Sine.easeInOut", true);
 
                     factoryTween.onComplete.add(function() {
-                        var mainFactoryTween = this.game.add.tween(mainFactory).to({ y: 30 }, 1000, "Sine.easeInOut", true);
+                        var mainFactoryTween = this.game.add.tween(mainFactory).to({ y: 30 }, 800, "Sine.easeInOut", true);
 
                         mainFactoryTween.onComplete.add(function() {
-                            this.game.add.tween(factoryNew).to({ y: 3 }, 1000, "Sine.easeInOut", true);
-                            this.game.add.tween(solarFactory).to({ y: 2 }, 1000, "Sine.easeInOut", true);
+                            this.game.add.tween(factoryNew).to({ y: 3 }, 800, "Sine.easeInOut", true);
+                            this.game.add.tween(solarFactory).to({ y: 2 }, 800, "Sine.easeInOut", true);
                         }, this);
                     }, this);
                 } else {
-                    var factoryTween = this.game.add.tween(myFactory).to({ y: -137 }, 1000, "Sine.easeInOut", true);
+                    var factoryTween = this.game.add.tween(myFactory).to({ y: -137 }, 800, "Sine.easeInOut", true);
 
                     factoryTween.onComplete.add(function() {
-                        var mainFactoryTween = this.game.add.tween(mainFactory).to({ y: 30 }, 1000, "Sine.easeInOut", true);
+                        var mainFactoryTween = this.game.add.tween(mainFactory).to({ y: 30 }, 800, "Sine.easeInOut", true);
 
                         mainFactoryTween.onComplete.add(function() {
-                            this.game.add.tween(factoryNew).to({ y: 3 }, 1000, "Sine.easeInOut", true);
+                            this.game.add.tween(factoryNew).to({ y: 3 }, 800, "Sine.easeInOut", true);
                         }, this);
                     }, this);
                 }
 
-                var iconFactoryTween = this.game.add.tween(iconMainCover).to({ y: -73 }, 1000, "Sine.easeInOut", true);
+                var iconFactoryTween = this.game.add.tween(iconMainCover).to({ y: -73 }, 1500, "Sine.easeInOut", true);
 
                 break;
             case this.building.buySolar.name:
                 // Check mainFactory has been built
                 if(mainFactory.y > 0) {
-                    this.game.add.tween(solarFactory).to({ y: 2 }, 1000, "Sine.easeInOut", true);
+                    this.game.add.tween(solarFactory).to({ y: 2 }, 1600, "Sine.easeInOut", true);
                 } else {
-                    this.game.add.tween(solarFactory).to({ y: 22 }, 1000, "Sine.easeInOut", true);
+                    this.game.add.tween(solarFactory).to({ y: 22 }, 1600, "Sine.easeInOut", true);
                 }
 
-                var iconFactoryTween = this.game.add.tween(iconSolarCover).to({ y: -73 }, 1000, "Sine.easeInOut", true);
+                var iconFactoryTween = this.game.add.tween(iconSolarCover).to({ y: -73 }, 1500, "Sine.easeInOut", true);
 
                 break;
             case this.building.buyRecycle.name:
@@ -176,7 +175,7 @@ Factory.prototype = {
                     this.game.add.tween(recycleFactoryNew).to({ y: 110 }, 1000, "Sine.easeInOut", true);
                 }, this);
 
-                var iconFactoryTween = this.game.add.tween(iconRecycleCover).to({ y: -73 }, 1000, "Sine.easeInOut", true);
+                var iconFactoryTween = this.game.add.tween(iconRecycleCover).to({ y: -73 }, 1500, "Sine.easeInOut", true);
 
                 break;
             case this.building.buyEmssion.name:
@@ -185,7 +184,7 @@ Factory.prototype = {
                     this.game.add.tween(emissionFactoryNew).to({ y: 109 }, 1000, "Sine.easeInOut", true);
                 }, this);
 
-                var iconFactoryTween = this.game.add.tween(iconEmissionsCover).to({ y: -73 }, 1000, "Sine.easeInOut", true);
+                var iconFactoryTween = this.game.add.tween(iconEmissionsCover).to({ y: -73 }, 1500, "Sine.easeInOut", true);
 
                 break;
             case this.building.buyWater.name:
@@ -194,7 +193,7 @@ Factory.prototype = {
                     this.game.add.tween(waterFactoryNew).to({ y: 165 }, 1000, "Sine.easeInOut", true);
                 }, this);
 
-                var iconFactoryTween = this.game.add.tween(iconWaterCover).to({ y: -73 }, 1000, "Sine.easeInOut", true);
+                var iconFactoryTween = this.game.add.tween(iconWaterCover).to({ y: -73 }, 1500, "Sine.easeInOut", true);
 
                 break;
             default:
@@ -204,7 +203,7 @@ Factory.prototype = {
         // Call score
         // score.changeMoney(this.building[factoryName].price);
 
-        this.game.time.events.add(2000, function() {
+        this.game.time.events.add(2200, function() {
             this.notification(this.building[factoryName].jpName, this.building[factoryName].eco, this.building[factoryName].ecoChip);
             // Call score
             // score.changeEco(this.building[factoryName].eco);
@@ -213,27 +212,41 @@ Factory.prototype = {
     },
 
     notification: function(jpName, eco, ecoChip) {
-        var buyFactoryNoti = buildFactoryBg.addChild(this.game.add.sprite(105, 75, 'buyFactoryNoti'));
+        buyFactoryNoti = buyFactoryBg.addChild(this.game.add.sprite(105, 75, 'buyFactoryNoti'));
 
-        var style1 = { font: "15px Arial", fill: "#000", align: 'center',wordWrap: true, wordWrapWidth: 100 };
-        var style2 = { font: "15px Arial", fill: "#000", align: 'right', wordWrap: true, wordWrapWidth: 100 };
-        console.log(buyFactoryNoti.centerX);
+        var style1 = { font: '15px Arial', fill: '#000', align: 'center', wordWrap: true, wordWrapWidth: 300 };
+        var style2 = { font: "14px Arial", fill: "#000", align: 'left'};
 
-        var text1 = buyFactoryNoti.addChild(this.game.add.text(170, 10, jpName + "に投資(とうし)しました", style1));
+        var text1 = buyFactoryNoti.addChild(this.game.add.text(170, 12, jpName + "に 投資(とうし)しました", style1));
         text1.anchor.set(0.5, 0);
-        var text2 = buyFactoryNoti.addChild(this.game.add.text(0, 40, "【" + eco + "】かんきょうが良くなりました", style2));
-        var text3 = buyFactoryNoti.addChild(this.game.add.text(0, 80, "エコチップ" + ecoChip + "まいゲット!!", style2));
+        var text2 = buyFactoryNoti.addChild(this.game.add.text(50, 70, "【" + eco + "】かんきょうが良くなりました", style2));
+        var text3 = buyFactoryNoti.addChild(this.game.add.text(50, 105, "エコチップ" + ecoChip + "まいゲット!!", style2));
+
+        var btnGameContinue = buyFactoryNoti.addChild(this.game.add.button(170, 135, 'btnGameContinue'));
+        btnGameContinue.anchor.set(0.5, 0);
+        btnGameContinue.inputEnabled = true;
+        btnGameContinue.events.onInputOver.add(this.buttonOver, this);
+        btnGameContinue.events.onInputOut.add(this.buttonOut, this);
+        btnGameContinue.events.onInputDown.add(this.buttonDown, this);
+        btnGameContinue.events.onInputUp.add(this.buttonClose, this);
+
     },
 
     resetBuyFactoryPosition: function() {
-        buildFactoryBg.x = 550;
+        buyFactoryBg.x = 550;
+        buyFactoryNoti.destroy();
         buyFactoryBorder.alpha = 0;
+        
         buyFactoryGroup.children.forEach(function(buyItem) {
             if (this.building[buyItem.key].built === 0) {
                 buyItem.children[1].inputEnabled = true;
-                buyItem.children[1].alpha = 1;
+            } else {
+                buyItem.alpha = 0.6;
             }
+
+            buyItem.children[1].alpha = 1;
         }, this);
+
         btnClose.inputEnabled = true;
         btnClose.alpha = 1;
         btnBack.inputEnabled = true;

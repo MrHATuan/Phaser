@@ -58,6 +58,7 @@ Preload.prototype = {
         this.load.spritesheet('btnClose1', 'assets/img/button/btn_close1.png', 97, 33, 3);
         this.load.spritesheet('btnClose2', 'assets/img/button/btn_close2.png', 145, 44, 3);
         this.load.spritesheet('btnBack', 'assets/img/button/btn_back.png', 49, 41, 3);
+        this.load.spritesheet('btnGameContinue', 'assets/img/button/btn_game_continue.png', 155, 27, 3);
 
         this.load.spritesheet('btnBuyFactory', 'assets/img/button/btn_buy_factory.png', 153, 33, 3);
 
