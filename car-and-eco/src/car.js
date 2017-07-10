@@ -22,7 +22,7 @@ Car.prototype = {
     },
 
     upgradeLevel: function() {
-
+        console.log("upgrade Car here.!!");
     },
 
     goUp: function() {
@@ -31,11 +31,11 @@ Car.prototype = {
 
         this.car.frame = 0;
 
-        this.game.add.tween(this.car).to({ x: carX + 55 }, 900, "Sine.easeInOut", true);
-        this.game.add.tween(this.car).to({ y: carY - 70 }, 400, "Sine.easeInOut", true);
+        this.game.add.tween(this.car).to({ x: carX + 55 }, 650, "Sine.easeInOut", true);
+        this.game.add.tween(this.car).to({ y: carY - 70 }, 300, "Sine.easeInOut", true);
 
-        this.game.time.events.add(500, function() {
-            this.game.add.tween(this.car).to({ y: carY - 32 }, 400, "Sine.easeInOut", true);
+        this.game.time.events.add(350, function() {
+            this.game.add.tween(this.car).to({ y: carY - 32 }, 300, "Sine.easeInOut", true);
         }, this).autoDestroy = true;
     },
 
@@ -45,11 +45,11 @@ Car.prototype = {
 
         this.car.frame = 1;
 
-        this.game.add.tween(this.car).to({ x: carX - 55 }, 900, "Sine.easeInOut", true);
-        this.game.add.tween(this.car).to({ y: carY - 70 }, 400, "Sine.easeInOut", true);
+        this.game.add.tween(this.car).to({ x: carX - 55 }, 650, "Sine.easeInOut", true);
+        this.game.add.tween(this.car).to({ y: carY - 70 }, 300, "Sine.easeInOut", true);
 
-        this.game.time.events.add(500, function() {
-            this.game.add.tween(this.car).to({ y: carY - 32 }, 400, "Sine.easeInOut", true);
+        this.game.time.events.add(350, function() {
+            this.game.add.tween(this.car).to({ y: carY - 32 }, 300, "Sine.easeInOut", true);
         }, this).autoDestroy = true;
     },
 
@@ -59,21 +59,21 @@ Car.prototype = {
 
         this.car.frame = 2;
 
-        this.game.add.tween(this.car).to({ x: carX + 55 }, 900, "Sine.easeInOut", true);
-        this.game.add.tween(this.car).to({ y: carY - 30 }, 400, "Sine.easeInOut", true);
+        this.game.add.tween(this.car).to({ x: carX + 55 }, 650, "Sine.easeInOut", true);
+        this.game.add.tween(this.car).to({ y: carY - 30 }, 300, "Sine.easeInOut", true);
 
-        this.game.time.events.add(500, function() {
-            this.game.add.tween(this.car).to({ y: carY + 32 }, 400, "Sine.easeInOut", true);
+        this.game.time.events.add(350, function() {
+            this.game.add.tween(this.car).to({ y: carY + 32 }, 300, "Sine.easeInOut", true);
         }, this).autoDestroy = true;
     },
 
-    jumpTo: function(move, map) {
+    jumpTo: function(move, map, factory, event) {
         // Check stop
         // if () {
 
         // }
 
-        this.game.time.events.repeat(1000, move, function() {
+        this.game.time.events.repeat(650, move, function() {
             // check goUp or turnLeft or turnRight
             if (map.getNextDirection(this.position) === 'up') {
                 this.goUp();
@@ -87,7 +87,7 @@ Car.prototype = {
         }, this).autoDestroy = true;
 
         // Check direction after jump
-        this.game.time.events.add(1000 * (move + 1), function() {
+        this.game.time.events.add(650 * (move + 1), function() {
             if (map.getNextDirection(this.position) === 'up') {
                 this.car.frame = 0;
             } else if (map.getNextDirection(this.position) === 'left') {
@@ -96,7 +96,8 @@ Car.prototype = {
                 this.car.frame = 2;
             }
             // Call event (Demo factory)
-            factory.startBuiding();
+            // factory.startBuiding();
+            event.startEvent(map, this, factory);
 
         }, this).autoDestroy = true;
     },

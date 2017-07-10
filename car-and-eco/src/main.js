@@ -1,7 +1,8 @@
 var Main = function(game){
     var map,
     car,
-    factory;
+    factory,
+    events;
 
     var diceBg, diceAll, diceRandom, dice;
 };
@@ -35,9 +36,12 @@ Main.prototype = {
         var car_x = car_position.x+24;
         var car_y = car_position.y+8;
         car = new Car(this.game, car_x, car_y);
+        
+        // Add Event
+        events = new Event(this.game, border, this);
 
         // Add Factory
-        factory = new Factory(this.game, right_frame, border, this);
+        factory = new Factory(this.game, right_frame, border, this, this);
 
         // Create duce
         diceBg = border.addChild(this.game.add.button(340, 140, 'diceBg'));
@@ -85,18 +89,20 @@ Main.prototype = {
 
         // Wait time animation end
         this.game.time.events.add(1500, function() {
-            car.jumpTo(random, map, factory);
-            // factory.startBuiding();
+            car.jumpTo(random, map, factory, events);
+            // this.resetGamePlay();
         }, this).autoDestroy = true;
 
         // Wait game play end
-        this.game.time.events.add((random + 1) * 1000 + 1500, function() {
+        this.game.time.events.add((random + 1) * 650 + 1500, function() {
             dice.visible = false;
         }, this).autoDestroy = true;
     },
 
     // Wait game play end
     resetGamePlay: function() {
+        // Hide Event Main
+        events.resetAllEvent();
         // Hide buy Factory Main
         factory.resetBuyFactoryPosition();
         // Reset Dice

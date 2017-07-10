@@ -53,12 +53,25 @@ Preload.prototype = {
         this.load.image('investOk', 'assets/img/factory/factory_buy/invest_ok.png');
         this.load.image('moneyBg', 'assets/img/factory/factory_buy/money_bg.png');
         this.load.image('buyFactoryNoti', 'assets/img/factory/factory_buy/notification.png');
-
+        // Event
+        this.load.image('whiteBg', 'assets/img/event/white_bg.png');
+        this.load.image('allEventBg', 'assets/img/event/allEvent_bg.png');
+        this.load.image('investBg', 'assets/img/event/invest/invest_bg.png');
+        this.load.image('eventHeader', 'assets/img/event/event/event_header.png');
+        this.load.image('eventText', 'assets/img/event/event/event_text.png');
+        this.load.image('eventCard', 'assets/img/event/event/event_card.png');
+        this.load.image('troubleHeader', 'assets/img/event/trouble/trouble_header.png');
+        this.load.image('troubleText', 'assets/img/event/trouble/trouble_text.png');
+        this.load.image('troubleCard', 'assets/img/event/trouble/trouble_card.png');
+        this.load.image('specialHeader', 'assets/img/event/special/special_header.png');
         // Buttons
         this.load.spritesheet('btnClose1', 'assets/img/button/btn_close1.png', 97, 33, 3);
         this.load.spritesheet('btnClose2', 'assets/img/button/btn_close2.png', 145, 44, 3);
         this.load.spritesheet('btnBack', 'assets/img/button/btn_back.png', 49, 41, 3);
         this.load.spritesheet('btnGameContinue', 'assets/img/button/btn_game_continue.png', 155, 27, 3);
+
+        this.load.spritesheet('btnCarDevelop', 'assets/img/button/btn_car_develop.png', 205, 55, 3);
+        this.load.spritesheet('btnFactoryBuild', 'assets/img/button/btn_factory_build.png', 205, 55, 3);
 
         this.load.spritesheet('btnBuyFactory', 'assets/img/button/btn_buy_factory.png', 153, 33, 3);
 

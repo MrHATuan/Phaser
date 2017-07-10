@@ -10,7 +10,7 @@ var Factory = function(game, parentFactory, parentBuyFactory, main){
     var buyFactoryBg, buyFactoryBorder, buyFactoryGroup, buyFactoryNoti;
 
     var btnClose, btnBack;
-    
+
     this.building = {
         buyMain: {name: "buyMain", jpName: "最新省エネ機械", price: 80, eco: 6, ecoChip: 2, built: 0},
         buySolar: {name: "buySolar", jpName: "太陽光パネル", price: 40, eco: 4, ecoChip: 1, built: 0},
@@ -115,10 +115,12 @@ Factory.prototype = {
 
     startBuiding: function() {
         if (this.invest < 5) {
-            var buyFactoryTween = this.game.add.tween(buyFactoryBg).to({ x: 8 }, 1000, "Sine.easeInOut", true);
+            buyFactoryBg.bringToTop();
+
+            var buyFactoryTween = this.game.add.tween(buyFactoryBg).to({ x: 8 }, 600, "Sine.easeInOut", true);
 
             buyFactoryTween.onComplete.add(function() {
-                this.game.add.tween(buyFactoryBorder).to({ alpha: 1 }, 500, "Linear", true);
+                this.game.add.tween(buyFactoryBorder).to({ alpha: 1 }, 200, "Linear", true);
             }, this);
         } else {
             console.log("You built all Building");
@@ -155,8 +157,8 @@ Factory.prototype = {
                 }
 
                 var iconFactoryTween = this.game.add.tween(iconMainCover).to({ y: -73 }, 1500, "Sine.easeInOut", true);
-
                 break;
+
             case this.building.buySolar.name:
                 // Check mainFactory has been built
                 if(mainFactory.y > 0) {
@@ -166,8 +168,8 @@ Factory.prototype = {
                 }
 
                 var iconFactoryTween = this.game.add.tween(iconSolarCover).to({ y: -73 }, 1500, "Sine.easeInOut", true);
-
                 break;
+
             case this.building.buyRecycle.name:
                 var factoryTween = this.game.add.tween(recycleFactory).to({ y: -80 }, 1000, "Sine.easeInOut", true);
 
@@ -176,26 +178,28 @@ Factory.prototype = {
                 }, this);
 
                 var iconFactoryTween = this.game.add.tween(iconRecycleCover).to({ y: -73 }, 1500, "Sine.easeInOut", true);
-
                 break;
+
             case this.building.buyEmssion.name:
                 var factoryTween = this.game.add.tween(emissionFactory).to({ y: -76 }, 1000, "Sine.easeInOut", true);
+
                 factoryTween.onComplete.add(function() {
                     this.game.add.tween(emissionFactoryNew).to({ y: 109 }, 1000, "Sine.easeInOut", true);
                 }, this);
 
                 var iconFactoryTween = this.game.add.tween(iconEmissionsCover).to({ y: -73 }, 1500, "Sine.easeInOut", true);
-
                 break;
+
             case this.building.buyWater.name:
                 var factoryTween = this.game.add.tween(waterFactory).to({ y: -76 }, 1000, "Sine.easeInOut", true);
+
                 factoryTween.onComplete.add(function() {
                     this.game.add.tween(waterFactoryNew).to({ y: 165 }, 1000, "Sine.easeInOut", true);
                 }, this);
 
                 var iconFactoryTween = this.game.add.tween(iconWaterCover).to({ y: -73 }, 1500, "Sine.easeInOut", true);
-
                 break;
+
             default:
                 break;
         }
@@ -217,10 +221,10 @@ Factory.prototype = {
         var style1 = { font: '15px Arial', fill: '#000', align: 'center', wordWrap: true, wordWrapWidth: 300 };
         var style2 = { font: "14px Arial", fill: "#000", align: 'left'};
 
-        var text1 = buyFactoryNoti.addChild(this.game.add.text(170, 12, jpName + "に 投資(とうし)しました", style1));
-        text1.anchor.set(0.5, 0);
-        var text2 = buyFactoryNoti.addChild(this.game.add.text(50, 70, "【" + eco + "】かんきょうが良くなりました", style2));
-        var text3 = buyFactoryNoti.addChild(this.game.add.text(50, 105, "エコチップ" + ecoChip + "まいゲット!!", style2));
+        var textName    = buyFactoryNoti.addChild(this.game.add.text(170, 12, jpName + "に 投資(とうし)しました", style1));
+        textName.anchor.set(0.5, 0);
+        var textEco     = buyFactoryNoti.addChild(this.game.add.text(50, 70, "【" + eco + "】かんきょうが良くなりました", style2));
+        var textEcoChip = buyFactoryNoti.addChild(this.game.add.text(50, 105, "エコチップ" + ecoChip + "まいゲット!!", style2));
 
         var btnGameContinue = buyFactoryNoti.addChild(this.game.add.button(170, 135, 'btnGameContinue'));
         btnGameContinue.anchor.set(0.5, 0);
@@ -229,14 +233,16 @@ Factory.prototype = {
         btnGameContinue.events.onInputOut.add(this.buttonOut, this);
         btnGameContinue.events.onInputDown.add(this.buttonDown, this);
         btnGameContinue.events.onInputUp.add(this.buttonClose, this);
-
     },
 
     resetBuyFactoryPosition: function() {
+        if (typeof buyFactoryNoti !== 'undefined') {
+            buyFactoryNoti.destroy();
+        }
+
         buyFactoryBg.x = 550;
-        buyFactoryNoti.destroy();
         buyFactoryBorder.alpha = 0;
-        
+
         buyFactoryGroup.children.forEach(function(buyItem) {
             if (this.building[buyItem.key].built === 0) {
                 buyItem.children[1].inputEnabled = true;
@@ -291,6 +297,7 @@ Factory.prototype = {
 
     buttonBack: function(button) {
         button.frame = 0;
+        this.resetBuyFactoryPosition();
     },
 
     buttonClose: function(button) {
