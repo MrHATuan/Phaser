@@ -14,6 +14,7 @@ Preload.prototype = {
         this.load.spritesheet('mapsheet', 'assets/map/sheet.png', 110, 64, 2);
         // Car
         this.load.spritesheet('car', 'assets/img/car.png', 66, 52, 4);
+        this.load.image('upgradeBg', 'assets/img/car/upgrade_bg.png');
         // dice
         this.load.spritesheet('diceBg', 'assets/img/dice/diceBg.png', 222, 222, 52);
         this.load.spritesheet('diceAll', 'assets/img/dice/dice_aimation.png', 83, 82, 12);
@@ -64,11 +65,15 @@ Preload.prototype = {
         this.load.image('troubleText', 'assets/img/event/trouble/trouble_text.png');
         this.load.image('troubleCard', 'assets/img/event/trouble/trouble_card.png');
         this.load.image('specialHeader', 'assets/img/event/special/special_header.png');
+        this.load.image('specialCircle', 'assets/img/event/special/special_circle.png');
+        this.load.image('specialStar', 'assets/img/event/special/special_star.png');
         // Buttons
         this.load.spritesheet('btnClose1', 'assets/img/button/btn_close1.png', 97, 33, 3);
         this.load.spritesheet('btnClose2', 'assets/img/button/btn_close2.png', 145, 44, 3);
         this.load.spritesheet('btnBack', 'assets/img/button/btn_back.png', 49, 41, 3);
         this.load.spritesheet('btnGameContinue', 'assets/img/button/btn_game_continue.png', 155, 27, 3);
+
+        this.load.spritesheet('btnInvestCar', 'assets/img/button/btn_Invest.png', 234, 44, 3);
 
         this.load.spritesheet('btnCarDevelop', 'assets/img/button/btn_car_develop.png', 205, 55, 3);
         this.load.spritesheet('btnFactoryBuild', 'assets/img/button/btn_factory_build.png', 205, 55, 3);

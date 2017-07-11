@@ -68,7 +68,7 @@ Factory.prototype = {
     },
 
     initBuyFactory: function(parent) {
-        buyFactoryBg   = parent.addChild(this.game.add.sprite(550, 8, 'buyFactoryBg'));
+        buyFactoryBg     = parent.addChild(this.game.add.sprite(561, 8, 'buyFactoryBg'));
         buyFactoryBorder = buyFactoryBg.addChild(this.game.add.sprite(8, 80, 'buyFactoryBorder'));
         buyFactoryBorder.alpha = 0;
 
@@ -106,17 +106,10 @@ Factory.prototype = {
         btnBack.events.onInputOut.add(this.buttonOut, this);
         btnBack.events.onInputDown.add(this.buttonDown, this);
         btnBack.events.onInputUp.add(this.buttonBack, this);
-
-        var maskBuyFactory = parent.addChild(this.game.add.graphics(0, 0));
-        maskBuyFactory.beginFill(0xffffff);
-        maskBuyFactory.drawRect(8, 8, 541, 342);
-        buyFactoryBg.mask = maskBuyFactory;
     },
 
     startBuiding: function() {
         if (this.invest < 5) {
-            buyFactoryBg.bringToTop();
-
             var buyFactoryTween = this.game.add.tween(buyFactoryBg).to({ x: 8 }, 600, "Sine.easeInOut", true);
 
             buyFactoryTween.onComplete.add(function() {
@@ -302,7 +295,7 @@ Factory.prototype = {
 
     buttonClose: function(button) {
         button.frame = 0;
-
+        this.resetBuyFactoryPosition();
         this.main.resetGamePlay();
     }
 }

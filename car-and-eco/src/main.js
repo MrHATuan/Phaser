@@ -14,6 +14,10 @@ Main.prototype = {
 
         var border = this.game.add.sprite(10, 100, 'border');
         border.fixedToCamera = true;
+        var maskBorder = border.addChild(this.game.add.graphics(0, 0));
+        maskBorder.beginFill(0xffffff);
+        maskBorder.drawRect(0, 0, 561, 362);
+        border.mask = maskBorder;
 
         var right_frame = this.game.add.sprite(border.width + 10, 118, 'right_frame');
         right_frame.fixedToCamera = true;
@@ -35,7 +39,7 @@ Main.prototype = {
         var car_position = map.getTile(map.start_position);
         var car_x = car_position.x+24;
         var car_y = car_position.y+8;
-        car = new Car(this.game, car_x, car_y);
+        car = new Car(this.game, car_x, car_y, border, this);
         
         // Add Event
         events = new Event(this.game, border, this);
@@ -90,7 +94,6 @@ Main.prototype = {
         // Wait time animation end
         this.game.time.events.add(1500, function() {
             car.jumpTo(random, map, factory, events);
-            // this.resetGamePlay();
         }, this).autoDestroy = true;
 
         // Wait game play end
@@ -103,8 +106,10 @@ Main.prototype = {
     resetGamePlay: function() {
         // Hide Event Main
         events.resetAllEvent();
+        // Hide Car Main
+        // car.resetAllInvestCar();
         // Hide buy Factory Main
-        factory.resetBuyFactoryPosition();
+        // factory.resetBuyFactoryPosition();
         // Reset Dice
         diceAll.visible = true;
         diceBg.visible = true;

@@ -1,9 +1,16 @@
-var Car = function(game, x, y){
-    this.initCar(game, x, y);
+var Car = function(game, x, y, parent, main){
+    this.main = main;
+    var parentCar;
+
+    var upgradeBg;
+
+    var btnInvestCar, btnClose, btnBack;
+
+    this.initCar(game, x, y, parent);
 };
 
 Car.prototype = {
-    initCar: function(game, x, y){
+    initCar: function(game, x, y, parent){
         this.game = game;
         this.position = 371;
         this.direction = 0;
@@ -11,6 +18,8 @@ Car.prototype = {
 
         this.car = this.game.add.sprite(x, y, 'car');
         this.game.camera.follow(this.car);
+
+        parentCar = parent;
     },
 
     getPosition: function() {
@@ -22,7 +31,33 @@ Car.prototype = {
     },
 
     upgradeLevel: function() {
-        console.log("upgrade Car here.!!");
+        upgradeBg = parentCar.addChild(this.game.add.sprite(-541, 8, 'upgradeBg'));
+
+        var upgradeCarTween = this.game.add.tween(upgradeBg).to({ x: 8 }, 600, "Sine.easeInOut", true);
+
+        upgradeCarTween.onComplete.add(function() {
+            btnInvestCar = upgradeBg.addChild(this.game.add.button(45, upgradeBg.height - 60, 'btnInvestCar'));
+            btnInvestCar.inputEnabled = true;
+            btnInvestCar.events.onInputOver.add(this.buttonOver, this);
+            btnInvestCar.events.onInputOut.add(this.buttonOut, this);
+            btnInvestCar.events.onInputDown.add(this.buttonDown, this);
+            btnInvestCar.events.onInputUp.add(this.buttonUp, this);
+            // Button close and back
+            btnClose = upgradeBg.addChild(this.game.add.button(290, upgradeBg.height - 60, 'btnClose2'));
+            btnClose.inputEnabled = true;
+            btnClose.events.onInputOver.add(this.buttonOver, this);
+            btnClose.events.onInputOut.add(this.buttonOut, this);
+            btnClose.events.onInputDown.add(this.buttonDown, this);
+            btnClose.events.onInputUp.add(this.buttonClose, this);
+
+            btnBack = upgradeBg.addChild(this.game.add.button(470, upgradeBg.height - 60, 'btnBack'));
+            btnBack.inputEnabled = true;
+            btnBack.events.onInputOver.add(this.buttonOver, this);
+            btnBack.events.onInputOut.add(this.buttonOut, this);
+            btnBack.events.onInputDown.add(this.buttonDown, this);
+            btnBack.events.onInputUp.add(this.buttonBack, this);
+        }, this);
+
     },
 
     goUp: function() {
@@ -104,5 +139,39 @@ Car.prototype = {
 
     buyCar: function() {
 
-    }
+    },
+
+    resetAllInvestCar: function() {
+        if (typeof upgradeBg !== 'undefined') {
+            upgradeBg.destroy();
+        }
+    },
+
+    buttonUp: function(button) {
+        button.frame = 0;
+
+    },
+
+    buttonOver: function(button) {
+        button.frame = 1;
+    },
+
+    buttonOut: function(button) {
+        button.frame = 0;
+    },
+
+    buttonDown: function(button) {
+        button.frame = 2;
+    },
+
+    buttonBack: function(button) {
+        button.frame = 0;
+        this.resetAllInvestCar();
+    },
+
+    buttonClose: function(button) {
+        button.frame = 0;
+        this.resetAllInvestCar();
+        this.main.resetGamePlay();
+    },
 }
