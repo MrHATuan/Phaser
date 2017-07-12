@@ -2,6 +2,7 @@ var Factory = function(game, parentFactory, parentBuyFactory, main){
     this.game = game;
     this.main = main;
 
+
     var myFactory, recycleFactory, emissionFactory, waterFactory, 
     mainFactory, factoryNew, solarFactory, recycleFactoryNew, emissionFactoryNew, waterFactoryNew;
 
@@ -233,7 +234,7 @@ Factory.prototype = {
             buyFactoryNoti.destroy();
         }
 
-        buyFactoryBg.x = 550;
+        buyFactoryBg.x = 561;
         buyFactoryBorder.alpha = 0;
 
         buyFactoryGroup.children.forEach(function(buyItem) {

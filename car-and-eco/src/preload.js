@@ -14,7 +14,16 @@ Preload.prototype = {
         this.load.spritesheet('mapsheet', 'assets/map/sheet.png', 110, 64, 2);
         // Car
         this.load.spritesheet('car', 'assets/img/car.png', 66, 52, 4);
-        this.load.image('upgradeBg', 'assets/img/car/upgrade_bg.png');
+        this.load.image('upgradeBg', 'assets/img/car/upgradeCar/upgrade_bg.png');
+        this.load.image('notificationStepBg', 'assets/img/car/upgradeCar/notification_step.png');
+        this.load.spritesheet('notificationUpgradeBg', 'assets/img/car/upgradeCar/notification_upgrade.png', 526, 266, 3);
+        this.load.spritesheet('carPriceBg', 'assets/img/car/upgradeCar/car_price_bg.png', 467, 101, 4);
+
+        this.load.image('buyCarBg', 'assets/img/car/buyCar/buy_car_bg.png');
+        this.load.image('textBg', 'assets/img/car/buyCar/text_bg.png');
+        this.load.image('textGoToFactory', 'assets/img/car/buyCar/text_go_to_factory.png');
+        this.load.spritesheet('yearBuyCar', 'assets/img/car/buyCar/year-buy-car.png', 147, 27, 5);
+
         // dice
         this.load.spritesheet('diceBg', 'assets/img/dice/diceBg.png', 222, 222, 52);
         this.load.spritesheet('diceAll', 'assets/img/dice/dice_aimation.png', 83, 82, 12);

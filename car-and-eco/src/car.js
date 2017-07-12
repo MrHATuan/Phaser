@@ -1,12 +1,12 @@
 var Car = function(game, x, y, parent, main){
     this.main = main;
-    var parentCar;
 
-    var upgradeBg;
+    var btnInvestCar, btnUpgradeClose, btnUpgradeBack;
 
-    var btnInvestCar, btnClose, btnBack;
+    var upgradeBg, notificationStepBg, notificationUpgradeBg;
 
     this.initCar(game, x, y, parent);
+    this.initUpgradeLevel(parent);
 };
 
 Car.prototype = {
@@ -18,8 +18,63 @@ Car.prototype = {
 
         this.car = this.game.add.sprite(x, y, 'car');
         this.game.camera.follow(this.car);
+    },
 
-        parentCar = parent;
+    initUpgradeLevel: function(parent) {
+        upgradeBg = parent.addChild(this.game.add.sprite(-541, 8, 'upgradeBg'));
+
+        var carPriceBg = upgradeBg.addChild(this.game.add.sprite(38, 85, 'carPriceBg'));
+
+        btnInvestCar = upgradeBg.addChild(this.game.add.button(45, upgradeBg.height - 60, 'btnInvestCar'));
+        btnInvestCar.inputEnabled = true;
+        btnInvestCar.events.onInputOver.add(this.buttonOver, this);
+        btnInvestCar.events.onInputOut.add(this.buttonOut, this);
+        btnInvestCar.events.onInputDown.add(this.buttonDown, this);
+        btnInvestCar.events.onInputUp.add(this.buttonUp, this);
+        // Button close and back
+        btnUpgradeClose = upgradeBg.addChild(this.game.add.button(290, upgradeBg.height - 60, 'btnClose2'));
+        btnUpgradeClose.inputEnabled = true;
+        btnUpgradeClose.events.onInputOver.add(this.buttonOver, this);
+        btnUpgradeClose.events.onInputOut.add(this.buttonOut, this);
+        btnUpgradeClose.events.onInputDown.add(this.buttonDown, this);
+        btnUpgradeClose.events.onInputUp.add(this.buttonClose, this);
+
+        btnUpgradeBack = upgradeBg.addChild(this.game.add.button(470, upgradeBg.height - 60, 'btnBack'));
+        btnUpgradeBack.inputEnabled = true;
+        btnUpgradeBack.events.onInputOver.add(this.buttonOver, this);
+        btnUpgradeBack.events.onInputOut.add(this.buttonOut, this);
+        btnUpgradeBack.events.onInputDown.add(this.buttonDown, this);
+        btnUpgradeBack.events.onInputUp.add(this.buttonBack, this);
+
+        notificationStepBg = upgradeBg.addChild(this.game.add.sprite(100, 40, 'notificationStepBg'));
+        notificationStepBg.alpha = 0;
+        var textStepUpgrade = notificationStepBg.addChild(this.game.add.text(50, 12, "100万円に投資(とうし)しました", { font: "17px Arial", fill: "#000", align: 'left'}));
+        var btnGameContinue = notificationStepBg.addChild(this.game.add.button(93, 65, 'btnGameContinue'));
+        btnGameContinue.inputEnabled = true;
+        btnGameContinue.events.onInputOver.add(this.buttonOver, this);
+        btnGameContinue.events.onInputOut.add(this.buttonOut, this);
+        btnGameContinue.events.onInputDown.add(this.buttonDown, this);
+        btnGameContinue.events.onInputUp.add(this.buttonClose, this);
+
+        // notificationUpgradeBg = upgradeBg.addChild(this.game.add.sprite(8, 8, 'notificationUpgradeBg'));
+    },
+
+    notificationUpgrade: function() {
+        notificationUpgradeBg = upgradeBg.addChild(this.game.add.sprite(8, 8, 'notificationUpgradeBg'));
+        var btnGameContinue = notificationUpgradeBg.addChild(this.game.add.button(186, 225, 'btnGameContinue'));
+
+        btnGameContinue.inputEnabled = true;
+        btnGameContinue.events.onInputOver.add(this.buttonOver, this);
+        btnGameContinue.events.onInputOut.add(this.buttonOut, this);
+        btnGameContinue.events.onInputDown.add(this.buttonDown, this);
+        btnGameContinue.events.onInputUp.add(this.buttonClose, this);
+    },
+
+    startUpgrade: function() {
+        if (this.level < 10) {
+            var upgradeCarTween = this.game.add.tween(upgradeBg).to({ x: 8 }, 600, "Sine.easeInOut", true);
+        }
+
     },
 
     getPosition: function() {
@@ -27,36 +82,6 @@ Car.prototype = {
     },
 
     getLevel: function() {
-
-    },
-
-    upgradeLevel: function() {
-        upgradeBg = parentCar.addChild(this.game.add.sprite(-541, 8, 'upgradeBg'));
-
-        var upgradeCarTween = this.game.add.tween(upgradeBg).to({ x: 8 }, 600, "Sine.easeInOut", true);
-
-        upgradeCarTween.onComplete.add(function() {
-            btnInvestCar = upgradeBg.addChild(this.game.add.button(45, upgradeBg.height - 60, 'btnInvestCar'));
-            btnInvestCar.inputEnabled = true;
-            btnInvestCar.events.onInputOver.add(this.buttonOver, this);
-            btnInvestCar.events.onInputOut.add(this.buttonOut, this);
-            btnInvestCar.events.onInputDown.add(this.buttonDown, this);
-            btnInvestCar.events.onInputUp.add(this.buttonUp, this);
-            // Button close and back
-            btnClose = upgradeBg.addChild(this.game.add.button(290, upgradeBg.height - 60, 'btnClose2'));
-            btnClose.inputEnabled = true;
-            btnClose.events.onInputOver.add(this.buttonOver, this);
-            btnClose.events.onInputOut.add(this.buttonOut, this);
-            btnClose.events.onInputDown.add(this.buttonDown, this);
-            btnClose.events.onInputUp.add(this.buttonClose, this);
-
-            btnBack = upgradeBg.addChild(this.game.add.button(470, upgradeBg.height - 60, 'btnBack'));
-            btnBack.inputEnabled = true;
-            btnBack.events.onInputOver.add(this.buttonOver, this);
-            btnBack.events.onInputOut.add(this.buttonOut, this);
-            btnBack.events.onInputDown.add(this.buttonDown, this);
-            btnBack.events.onInputUp.add(this.buttonBack, this);
-        }, this);
 
     },
 
@@ -102,10 +127,10 @@ Car.prototype = {
         }, this).autoDestroy = true;
     },
 
-    jumpTo: function(move, map, factory, event) {
+    jumpTo: function(move, map, factory, eventGame) {
         // Check stop
-        // if () {
-
+        // if (stop) {
+        //     this.buyCar();
         // }
 
         this.game.time.events.repeat(650, move, function() {
@@ -131,25 +156,62 @@ Car.prototype = {
                 this.car.frame = 2;
             }
             // Call event (Demo factory)
-            // factory.startBuiding();
-            event.startEvent(map, this, factory);
+            eventGame.startEvent(map, this, factory);
+            this.buyCar();
 
         }, this).autoDestroy = true;
     },
 
     buyCar: function() {
-
+        // console.log("buy car here.!");
     },
 
     resetAllInvestCar: function() {
-        if (typeof upgradeBg !== 'undefined') {
-            upgradeBg.destroy();
+        upgradeBg.x = -541;
+
+        btnInvestCar.inputEnabled    = true;
+        btnUpgradeClose.inputEnabled = true;
+        btnUpgradeBack.inputEnabled  = true;
+
+        notificationStepBg.y = 40;
+        notificationStepBg.alpha = 0;
+
+        if (typeof notificationUpgradeBg !== 'undefined') {
+            notificationUpgradeBg.destroy();
         }
     },
 
     buttonUp: function(button) {
         button.frame = 0;
 
+        btnInvestCar.inputEnabled    = false;
+        btnUpgradeClose.inputEnabled = false;
+        btnUpgradeBack.inputEnabled  = false;
+
+        // Call score
+        // score.changeMoney(-100);
+
+        this.level += 1;
+        // check level
+        if (this.level < 3) {
+            this.game.add.tween(notificationStepBg).to({ y: 60 }, 300, "Sine.easeInOut", true);
+            this.game.add.tween(notificationStepBg).to({ alpha: 1 }, 200, "Linear", true);
+        } else if (this.level == 3) {
+            this.notificationUpgrade();
+            notificationUpgradeBg.frame = 0;
+        } else if (this.level > 3 && this.level < 6) {
+            this.game.add.tween(notificationStepBg).to({ y: 60 }, 300, "Sine.easeInOut", true);
+            this.game.add.tween(notificationStepBg).to({ alpha: 1 }, 200, "Linear", true);
+        } else if (this.level == 6) {
+            this.notificationUpgrade();
+            notificationUpgradeBg.frame = 1;
+        } else if (this.level > 6 && this.level < 10) {
+            this.game.add.tween(notificationStepBg).to({ y: 60 }, 300, "Sine.easeInOut", true);
+            this.game.add.tween(notificationStepBg).to({ alpha: 1 }, 200, "Linear", true);
+        } else {
+            this.notificationUpgrade();
+            notificationUpgradeBg.frame = 2;
+        }
     },
 
     buttonOver: function(button) {

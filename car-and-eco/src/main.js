@@ -2,7 +2,7 @@ var Main = function(game){
     var map,
     car,
     factory,
-    events;
+    eventGame;
 
     var diceBg, diceAll, diceRandom, dice;
 };
@@ -35,14 +35,14 @@ Main.prototype = {
         map.tiles.mask = mask;
         mask.fixedToCamera = true;
 
+        // Add Event
+        eventGame = new Event(this.game, border, this);
+
         // New Car
         var car_position = map.getTile(map.start_position);
         var car_x = car_position.x+24;
         var car_y = car_position.y+8;
         car = new Car(this.game, car_x, car_y, border, this);
-        
-        // Add Event
-        events = new Event(this.game, border, this);
 
         // Add Factory
         factory = new Factory(this.game, right_frame, border, this, this);
@@ -93,7 +93,7 @@ Main.prototype = {
 
         // Wait time animation end
         this.game.time.events.add(1500, function() {
-            car.jumpTo(random, map, factory, events);
+            car.jumpTo(random, map, factory, eventGame);
         }, this).autoDestroy = true;
 
         // Wait game play end
@@ -105,11 +105,7 @@ Main.prototype = {
     // Wait game play end
     resetGamePlay: function() {
         // Hide Event Main
-        events.resetAllEvent();
-        // Hide Car Main
-        // car.resetAllInvestCar();
-        // Hide buy Factory Main
-        // factory.resetBuyFactoryPosition();
+        eventGame.resetAllEvent();
         // Reset Dice
         diceAll.visible = true;
         diceBg.visible = true;

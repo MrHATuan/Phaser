@@ -37,7 +37,6 @@ Event.prototype = {
         // this.event();
         // this.trouble();
         // this.special();
-        // this.buyCar(car);
     },
 
     investCarAndFactory: function(car, factory) {
@@ -50,7 +49,7 @@ Event.prototype = {
         btnCarDevelop.events.onInputDown.add(this.buttonDown, this);
         btnCarDevelop.events.onInputUp.add(function(button) {
             button.frame = 0;
-            car.upgradeLevel();
+            car.startUpgrade();
         }, this);
 
         var btnFactoryBuild = investBg.addChild(this.game.add.button(285, 255, 'btnFactoryBuild'));
@@ -176,20 +175,22 @@ Event.prototype = {
         }, this).autoDestroy = true;
     },
 
-    buyCar: function(car) {
-        car.buyCar();
-    },
-
     randomEvent: function(buttonCard) {
-        this.game.add.tween(buttonCard).to({ y: -86 }, 500, Phaser.Easing.Linear.None, true);
-
+        var btnTween = this.game.add.tween(buttonCard).to({ y: -86 }, 500, Phaser.Easing.Linear.None, true);
+        btnTween.onComplete.add(function() {
+            this.main.resetGamePlay();
+        }, this);
         console.log("Function random event");
     },
 
     randomTrouble: function(buttonCard) {
         this.game.add.tween(buttonCard).to( { angle: 360 }, 800, Phaser.Easing.Linear.None, true);
         var scaleTween = this.game.add.tween(buttonCard.scale).to( { x: 0.1, y: 0.1 }, 800, Phaser.Easing.Linear.None, true);
-        scaleTween.onComplete.add(function() { buttonCard.alpha = 0 }, this);
+        scaleTween.onComplete.add(function() { 
+            buttonCard.alpha = 0;
+
+            this.main.resetGamePlay();
+        }, this);
 
         console.log("Function random trouble");
     },
