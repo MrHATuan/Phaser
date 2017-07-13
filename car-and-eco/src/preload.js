@@ -14,10 +14,18 @@ Preload.prototype = {
         this.load.spritesheet('mapsheet', 'assets/map/sheet.png', 110, 64, 2);
         // Car
         this.load.spritesheet('car', 'assets/img/car.png', 66, 52, 4);
+        this.load.spritesheet('car2', 'assets/img/car2.png', 65, 56, 4);
+        this.load.spritesheet('car3', 'assets/img/car3.png', 65, 56, 4);
+        this.load.spritesheet('car4', 'assets/img/car4.png', 65, 56, 4);
         this.load.image('upgradeBg', 'assets/img/car/upgradeCar/upgrade_bg.png');
         this.load.image('notificationStepBg', 'assets/img/car/upgradeCar/notification_step.png');
         this.load.spritesheet('notificationUpgradeBg', 'assets/img/car/upgradeCar/notification_upgrade.png', 526, 266, 3);
+        this.load.spritesheet('notificationCar', 'assets/img/car/upgradeCar/notification_car.png', 65, 56, 3);
         this.load.spritesheet('carPriceBg', 'assets/img/car/upgradeCar/car_price_bg.png', 467, 101, 4);
+        this.load.spritesheet('upgradeStep', 'assets/img/car/upgradeCar/upgrade_step.png', 378, 66, 20);
+        this.load.image('arrowRight', 'assets/img/car/upgradeCar/arrow_right.png');
+        this.load.image('arrowUp', 'assets/img/car/upgradeCar/arrow_up.png');
+        this.load.image('inDevelop', 'assets/img/car/upgradeCar/in_develop.png');
 
         this.load.image('buyCarBg', 'assets/img/car/buyCar/buy_car_bg.png');
         this.load.image('textBg', 'assets/img/car/buyCar/text_bg.png');
@@ -42,15 +50,10 @@ Preload.prototype = {
         this.load.image('waterFactory', 'assets/img/factory/waterFactory.png');
         this.load.image('waterFactoryNew', 'assets/img/factory/waterFactoryNew.png');
         // factory Icon
-        this.load.image('iconMain', 'assets/img/factory/factory_icon/icon_main.png');
         this.load.image('iconMainCover', 'assets/img/factory/factory_icon/icon_mainCover.png');
-        this.load.image('iconSolar', 'assets/img/factory/factory_icon/icon_solar.png');
         this.load.image('iconSolarCover', 'assets/img/factory/factory_icon/icon_solarCover.png');
-        this.load.image('iconRecycle', 'assets/img/factory/factory_icon/icon_recycle.png');
         this.load.image('iconRecycleCover', 'assets/img/factory/factory_icon/icon_recycleCover.png');
-        this.load.image('iconEmissions', 'assets/img/factory/factory_icon/icon_emissions.png');
         this.load.image('iconEmissionsCover', 'assets/img/factory/factory_icon/icon_emissionsCover.png');
-        this.load.image('iconWater', 'assets/img/factory/factory_icon/icon_water.png');
         this.load.image('iconWaterCover', 'assets/img/factory/factory_icon/icon_waterCover.png');
         // Buy Factory
         this.load.image('buyFactoryBg', 'assets/img/factory/factory_buy/bg_buy_factory.png');

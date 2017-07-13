@@ -49,18 +49,12 @@ Factory.prototype = {
         factoryGroup.mask = maskFactory;
 
         // Add Icon Factory
-        var iconMain      = parent.addChild(this.game.add.sprite(64, 8, 'iconMain'));
-        var iconSolar     = parent.addChild(this.game.add.sprite(118, 8, 'iconSolar'));
-        var iconRecycle   = parent.addChild(this.game.add.sprite(172, 8, 'iconRecycle'));
-        var iconEmissions = parent.addChild(this.game.add.sprite(226, 8, 'iconEmissions'));
-        var iconWater     = parent.addChild(this.game.add.sprite(280, 8, 'iconWater'));
-
         var iconFactoryGroup = parent.addChild(this.game.add.group());
         iconMainCover      = iconFactoryGroup.create(65, 9, 'iconMainCover');
         iconSolarCover     = iconFactoryGroup.create(119, 9, 'iconSolarCover');
         iconRecycleCover   = iconFactoryGroup.create(173, 9, 'iconRecycleCover');
-        iconEmissionsCover = iconFactoryGroup.create(227, 9, 'iconEmissionsCover');
-        iconWaterCover     = iconFactoryGroup.create(281, 9, 'iconWaterCover');
+        iconWaterCover     = iconFactoryGroup.create(227, 9, 'iconWaterCover');
+        iconEmissionsCover = iconFactoryGroup.create(281, 9, 'iconEmissionsCover');
 
         var maskIconFactory = parent.addChild(this.game.add.graphics(0, 0));
         maskIconFactory.beginFill(0xffffff);
