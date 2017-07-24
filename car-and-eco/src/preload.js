@@ -9,6 +9,15 @@ Preload.prototype = {
         this.load.image('bg', 'assets/img/bg.png');
         this.load.image('border', 'assets/img/border.png');
         this.load.image('right_frame', 'assets/img/right_frame.png');
+        this.load.image('fullmap', 'assets/img/fullmap.png');
+        this.load.image('brick', 'assets/img/brick.png');
+        this.load.image('stop_position', 'assets/img/stop_position.png');
+        this.load.image('start_position', 'assets/img/start_position.png');
+        this.load.image('finish_position', 'assets/img/finish_position.png');
+        this.load.image('stick', 'assets/img/stick.png');
+        this.load.image('block_stop', 'assets/img/block_stop.png');
+        
+        
         // map
         this.load.json('map', 'assets/map/map.json');
         this.load.spritesheet('mapsheet', 'assets/map/sheet.png', 110, 64, 2);
@@ -37,6 +46,17 @@ Preload.prototype = {
         this.load.spritesheet('diceAll', 'assets/img/dice/dice_aimation.png', 83, 82, 12);
         this.load.spritesheet('dice', 'assets/img/dice/dice.png', 73, 81, 6);
         this.load.spritesheet('diceRandom', 'assets/img/dice/dice_random.png', 83, 83, 50);
+        //btn
+        this.load.spritesheet('btn_show', 'assets/img/btn_show.png', 154, 25);
+        this.load.spritesheet('btn_hide', 'assets/img/btn_hide.png', 154, 25);
+        //event icon
+        this.load.spritesheet('event_icon', 'assets/img/event_icon.png', 74, 43);
+        this.load.spritesheet('event_icon_small', 'assets/img/event_icon_small.png', 34, 18);
+        // sound btn
+        this.load.spritesheet('btn_sound', 'assets/img/btn_sound.png', 58, 26);
+        
+        
+
         // factory
         this.load.image('factoryGround', 'assets/img/factory/ground.png');
         this.load.image('factory', 'assets/img/factory/factory.png');
@@ -92,6 +112,10 @@ Preload.prototype = {
 
         this.load.spritesheet('btnBuyFactory', 'assets/img/button/btn_buy_factory.png', 153, 33, 3);
 
+        // Audio
+         game.load.audio('main', ['assets/audio/main_bgm.mp3']);
+         game.load.audio('push', ['assets/audio/push.mp3']);
+         game.load.audio('car_move', ['assets/audio/car_move.mp3']);
     },
     create: function(){
         this.game.state.start("Main");

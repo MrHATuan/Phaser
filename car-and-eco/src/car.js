@@ -22,6 +22,7 @@ Car.prototype = {
         this.direction = 0;
         this.level = 0;
 
+        this.car_move_sound = this.game.add.audio('car_move');
         car1 = this.game.add.sprite(x, y, 'car');
         car2 = this.game.add.sprite(x, y, 'car2');
         car2.alpha = 0;
@@ -121,7 +122,19 @@ Car.prototype = {
             this.game.add.tween(this.car).to({ y: carY - 32 }, 300, "Sine.easeInOut", true);
         }, this).autoDestroy = true;
     },
+    goBack: function() {
+        var carY = this.car.y;
+        var carX = this.car.x;
 
+        this.car.frame = 3;
+
+        this.game.add.tween(this.car).to({ x: carX - 55 }, 650, "Sine.easeInOut", true);
+        this.game.add.tween(this.car).to({ y: carY - 30 }, 300, "Sine.easeInOut", true);
+
+        this.game.time.events.add(350, function() {
+            this.game.add.tween(this.car).to({ y: carY + 32 }, 300, "Sine.easeInOut", true);
+        }, this).autoDestroy = true;
+    },
     turnLeft: function() {
         var carY = this.car.y;
         var carX = this.car.x;
@@ -155,26 +168,62 @@ Car.prototype = {
         // if (stop) {
         //     this.buyCar();
         // }
-
+        this.game.camera.target=null;
         this.game.time.events.repeat(650, move, function() {
+            this.car_move_sound.play();
+            var direct = map.getNextDirection(this.position);
             // check goUp or turnLeft or turnRight
-            if (map.getNextDirection(this.position) === 'up') {
+            if (direct === 'up') {
                 this.goUp();
-            } else if (map.getNextDirection(this.position) === 'left') {
+            } else if (direct === 'left') {
                 this.turnLeft();
-            } else {
+            } else if (direct === 'right') {
                 this.turnRight();
+            }else {
+                this.goBack();
             }
 
             this.position = map.getTilePosition(this.position, 1);
         }, this).autoDestroy = true;
 
         // Check direction after jump
-        this.game.time.events.add(650 * (move + 1), function() {
-            // Call event (Demo factory)
-            eventGame.startEvent(map, this, factory);
-            this.buyCar();
+        this.game.time.events.add(650 * (move + 2), function() {
+            var direct = map.getNextDirection(this.position);
+            if (direct === 'up') {
+                this.car.frame = 0;
+            } else if (direct === 'left') {
+                this.car.frame = 1;
+            } else if (direct === 'right') {
+                this.car.frame = 2;
+            }else {
+                this.car.frame = 3;
+            }
 
+            // set position back to full map
+            map.setCarPosition(this.position);
+
+            var next_stop = map.getNextStop(this.position);
+            // set car position to next stop
+            if (next_stop) {
+                this.buyCar();
+
+                var tile = map.getTile(next_stop);
+                this.car.x=tile.x+24;
+                this.car.y=tile.y+8;
+                this.position = next_stop;
+                // show next road event
+                map.showNextEventBlock(this.position);
+                // test change event
+                map.changeEvent(this.position);
+            }else {
+                // get event
+                map.getEvent(this.position);
+                // Call event (Demo factory)
+                eventGame.startEvent(map, this, factory);
+            }
+            
+            this.game.camera.follow(this.car, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+            this.game.camera.deadzone = new Phaser.Rectangle(100, 300, 10, 10);
         }, this).autoDestroy = true;
     },
 
@@ -196,8 +245,8 @@ Car.prototype = {
             notificationUpgradeBg.destroy();
         }
 
-        this.game.camera.follow(this.car);
-        this.game.camera.deadzone = new Phaser.Rectangle(100, 300, 10, 10);
+        // this.game.camera.follow(this.car);
+        // this.game.camera.deadzone = new Phaser.Rectangle(100, 300, 10, 10);
 
         if (map.getNextDirection(this.position) === 'up') {
             this.car.frame = 0;

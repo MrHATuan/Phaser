@@ -5,6 +5,7 @@ var Main = function(game){
     eventGame;
 
     var diceBg, diceAll, diceRandom, dice;
+
 };
 
 Main.prototype = {
@@ -12,7 +13,7 @@ Main.prototype = {
         var bg = this.game.add.sprite(0, 0, 'bg');
         bg.fixedToCamera = true;
 
-        var border = this.game.add.sprite(10, 100, 'border');
+        border = this.game.add.sprite(10, 100, 'border');
         border.fixedToCamera = true;
         var maskBorder = border.addChild(this.game.add.graphics(0, 0));
         maskBorder.beginFill(0xffffff);
@@ -34,7 +35,8 @@ Main.prototype = {
         //  And apply it to the Group itself
         map.tiles.mask = mask;
         mask.fixedToCamera = true;
-
+        map.createEvent(map.start_position);
+        
         // Add Event
         eventGame = new Event(this.game, border, this);
 
@@ -67,29 +69,57 @@ Main.prototype = {
         dice.visible = false;
 
         this.game.camera.deadzone = new Phaser.Rectangle(100, 300, 10, 10);
+        map.createFullMap(border);
+
+        // sound btn
+        this.sound_btn_show =  this.game.add.button(game.camera.width - this.game.cache.getImage('btn_sound').width/4 -10, 100, 'btn_sound', this.soundOnClick, this, 1, 0);
+        this.sound_btn_show.fixedToCamera = true;
+
+        this.main_sound = this.game.add.audio('main');
+        this.push_sound = this.game.add.audio('push');
+
+        this.main_sound.loop = true;
+        this.main_sound.play();
+
 
         // Input
         var cursors = this.game.input.keyboard.createCursorKeys();
     },
-
+    soundOnClick: function() {
+        if (this.game.sound.mute === false) {
+            this.sound_btn_show.setFrames(3, 2);
+            this.game.sound.mute = true;
+        } else {
+            this.sound_btn_show.setFrames(1, 0);
+            this.game.sound.mute = false;
+        }
+    },
     update: function() {
         diceBg.onInputUp.add(this.gamePlay, this);
     },
 
     render: function() {
         // debug
+        // this.game.debug.inputInfo(32, 32);
     },
 
     gamePlay: function() {
+        this.push_sound.play();
+        this.game.time.events.repeat(400, 2, function() {
+            this.push_sound.play();
+        }, this).autoDestroy = true;
+
         diceBg.animations.play('close').onComplete.add(function() {
             diceBg.visible = false;
         }, this);
         diceAll.visible = false;
         diceRandom.visible = true;
         // Get Random
-        var random = Math.floor(Math.random() * 4) + 1;
+        var random = Math.floor(Math.random() * 6) + 1;
         // Dice animation
         this.randomDice(random);
+
+        random = map.getMovingNumber(car.position, random);
 
         // Wait time animation end
         this.game.time.events.add(1500, function() {
@@ -101,7 +131,6 @@ Main.prototype = {
             dice.visible = false;
         }, this).autoDestroy = true;
     },
-
     // Wait game play end
     resetGamePlay: function() {
         // Hide Event Main
